@@ -1,0 +1,2342 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PORTFOLYO // 2000</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+        :root {
+            --main-bg-color: #00000a;
+            --primary-color: #00ff00;
+            --secondary-color: #ff00ff;
+            --glow-color: rgba(0, 255, 0, 0.7);
+            --window-bg: rgba(10, 20, 40, 0.8);
+            --border-color: var(--primary-color);
+        }
+
+        .will-change-transform {
+            will-change: transform;
+        }
+
+        .will-change-filter {
+            will-change: filter;
+        }
+
+        .will-change-shadow {
+            will-change: box-shadow;
+        }
+
+        /* Performance optimizations for background elements */
+        .optimized-background {
+            contain: layout style paint;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cpath d='M16,2 L16,9 M16,23 L16,30 M2,16 L9,16 M23,16 L30,16' stroke-width='1' stroke='%2300ff00'/%3E%3Cpath d='M16,13 L19,16 L16,19 L13,16 Z' stroke-width='1' stroke='%2300ff00' fill='rgba(0,255,0,0.3)'/%3E%3Crect x='15' y='8' width='2' height='2' fill='%23ff00ff' /%3E%3Crect x='22' y='15' width='2' height='2' fill='%23ff00ff' /%3E%3C/svg%3E") 16 16, auto;
+        }
+
+        body {
+            background-color: var(--main-bg-color);
+            color: var(--primary-color);
+            font-family: 'VT323', monospace;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-shadow: 0 0 5px var(--glow-color);
+            /* Performance optimizations */
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-perspective: 1000;
+            perspective: 1000;
+        }
+
+        .stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            z-index: -3;
+            background-image:
+                radial-gradient(white, rgba(255, 255, 255, 0.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255, 255, 255, 0.15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255, 255, 255, 0.1) 2px, transparent 40px),
+                radial-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1) 2px, transparent 30px);
+            background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+            background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+            animation: stars-move 200s linear infinite;
+            will-change: transform;
+            transform: translateZ(0);
+            contain: layout style paint;
+            backface-visibility: hidden;
+        }
+
+        @keyframes stars-move {
+            from {
+                transform: translate3d(0, 0, 0);
+            }
+
+            to {
+                transform: translate3d(-50%, 25%, 0);
+            }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 50vmax;
+            height: 50vmax;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%2300ff00' stroke-width='0.5'%3E%3Cpath d='M50,5 C25,25 25,75 50,95 S75,75 75,25 C75,25 50,5 50,5 Z' opacity='0.5'/%3E%3Cpath d='M50,15 C35,35 35,65 50,85 S65,65 65,35 C65,35 50,15 50,15 Z'/%3E%3Ccircle cx='50' cy='50' r='10'/%3E%3Cpath d='M50,30 L50,70 M30,50 L70,50'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            transform: translate3d(-50%, -50%, 0);
+            opacity: 0.05;
+            z-index: -1;
+            animation: rotate-sigil 120s linear infinite, pulse-sigil 15s ease-in-out infinite;
+            will-change: transform, opacity;
+            contain: layout style paint;
+            backface-visibility: hidden;
+        }
+
+        @keyframes rotate-sigil {
+            from {
+                transform: translate3d(-50%, -50%, 0) rotate(0deg);
+            }
+
+            to {
+                transform: translate3d(-50%, -50%, 0) rotate(360deg);
+            }
+        }
+
+        @keyframes pulse-sigil {
+
+            0%,
+            100% {
+                opacity: 0.05;
+                transform: translate3d(-50%, -50%, 0) scale(1);
+            }
+
+            50% {
+                opacity: 0.1;
+                transform: translate3d(-50%, -50%, 0) scale(1.05);
+            }
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            z-index: -2;
+            background-image:
+                linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(to right, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: move-grid 150s linear infinite;
+            will-change: transform;
+            transform: translateZ(0);
+            contain: layout style paint;
+            backface-visibility: hidden;
+        }
+
+        @keyframes move-grid {
+            from {
+                transform: translate3d(0, 0, 0);
+            }
+
+            to {
+                transform: translate3d(-50%, -50%, 0);
+            }
+        }
+
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            box-shadow: inset 0 0 15vw rgba(0, 0, 0, 0.8);
+            z-index: 10;
+            contain: layout style paint;
+        }
+
+        @keyframes stars {
+            from {
+                background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+            }
+
+            to {
+                background-position: -10000px 5000px, -10000px 5000px, -10000px 5000px, -10000px 5000px;
+            }
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.5) 51%);
+            background-size: 100% 4px;
+            animation: scanline 3s linear infinite;
+            will-change: transform;
+            transform: translateZ(0);
+            contain: layout style paint;
+            backface-visibility: hidden;
+        }
+
+        @keyframes scanline {
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            100% {
+                transform: translate3d(0, 4px, 0);
+            }
+        }
+
+        .main-container {
+            width: 800px;
+            max-width: 90vw;
+            height: 550px;
+            max-height: 90vh;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 0 15px var(--glow-color), inset 0 0 15px var(--glow-color);
+            background: var(--window-bg);
+            backdrop-filter: blur(5px);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            resize: both;
+            overflow: hidden;
+            /* Prevent content from spilling during resize */
+        }
+
+        header.window-header {
+            background: var(--border-color);
+            color: var(--main-bg-color);
+            padding: 5px 10px;
+            text-shadow: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            cursor: move;
+        }
+
+        .lang-switcher {
+            font-size: 1rem;
+        }
+
+        .lang-switcher span {
+            margin-left: 5px;
+            opacity: 0.6;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-switcher span:hover,
+        .lang-switcher span.active {
+            opacity: 1;
+            text-shadow: 0 0 5px var(--secondary-color);
+        }
+
+        .header-title {
+            animation: header-glitch 5s infinite steps(10);
+        }
+
+        @keyframes header-glitch {
+
+            0%,
+            100% {
+                text-shadow: -1px -1px #ff00ff, 1px 1px #00ffff;
+            }
+
+            10% {
+                text-shadow: -1px -1px #ff00ff, 3px 2px #00ffff;
+                transform: translate(2px, -1px);
+            }
+
+            20% {
+                text-shadow: -1px -1px #ff00ff, -2px -1px #00ffff;
+                transform: translate(-2px, 1px);
+            }
+
+            30%,
+            50%,
+            70%,
+            90% {
+                text-shadow: -1px -1px #ff00ff, 1px 1px #00ffff;
+                transform: none;
+            }
+
+            40% {
+                text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff;
+            }
+
+            60% {
+                text-shadow: 1px 1px #ff00ff, -1px -1px #00ffff;
+                color: #fff;
+            }
+
+            80% {
+                text-shadow: none;
+            }
+        }
+
+        .header-buttons span {
+            margin-left: 5px;
+            border: 1px solid var(--main-bg-color);
+            padding: 0 5px;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--main-bg-color);
+        }
+
+        main::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        main::-webkit-scrollbar-track {
+            background: var(--main-bg-color);
+        }
+
+        main::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--primary-color);
+            padding: 5px;
+        }
+
+        nav button {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            font-family: inherit;
+            font-size: 1.2rem;
+            padding: 5px 15px;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        nav button:hover,
+        nav button.active {
+            background: var(--primary-color);
+            color: var(--main-bg-color);
+            text-shadow: none;
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+
+        nav button:active {
+            transform: scale(0.95);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .project-card {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+            will-change: transform, box-shadow;
+        }
+
+        .project-card:hover {
+            animation: card-glitch 0.4s infinite;
+        }
+
+        @keyframes card-glitch {
+            0% {
+                transform: translate(0);
+                box-shadow: 0 0 10px var(--secondary-color);
+            }
+
+            20% {
+                transform: translate(-2px, 2px);
+            }
+
+            40% {
+                transform: translate(2px, -2px);
+            }
+
+            60% {
+                transform: translate(-2px, -2px);
+            }
+
+            80% {
+                transform: translate(2px, 2px);
+            }
+
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        .project-card h3 {
+            color: var(--secondary-color);
+            text-shadow: 0 0 5px var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            font-size: 1rem;
+            flex-grow: 1;
+            /* Allow p to take up space */
+        }
+
+        .project-links {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .project-links a {
+            border: 1px solid var(--secondary-color);
+            padding: 3px 8px;
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .project-links a:hover {
+            background: var(--secondary-color);
+            color: var(--main-bg-color);
+            text-shadow: none;
+        }
+
+        .skills-list {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skills-list span {
+            border: 1px solid var(--primary-color);
+            padding: 5px 10px;
+        }
+
+        .contact-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 10px;
+            transition: text-shadow 0.2s;
+        }
+
+        .contact-links a:hover {
+            text-shadow: 0 0 10px var(--secondary-color);
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+            /* Push footer to the bottom */
+            padding-top: 5px;
+            font-size: 1rem;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .terminal-output {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 5px;
+            font-size: 0.9rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--main-bg-color);
+        }
+
+        .terminal-output::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .terminal-output::-webkit-scrollbar-track {
+            background: var(--main-bg-color);
+        }
+
+        .terminal-output::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .terminal-output div {
+            padding-bottom: 3px;
+        }
+
+        .prompt-line {
+            display: flex;
+        }
+
+        .prompt-line>span:first-child {
+            color: var(--secondary-color);
+            margin-right: 5px;
+        }
+
+        #terminal-input {
+            background: transparent;
+            border: none;
+            color: var(--primary-color);
+            font-family: inherit;
+            font-size: inherit;
+            flex-grow: 1;
+            outline: none;
+            text-shadow: 0 0 5px var(--glow-color);
+        }
+
+        .system-status {
+            display: flex;
+            justify-content: space-around;
+            font-size: 0.8rem;
+            padding: 2px 5px;
+            border-top: 1px dashed var(--border-color);
+            margin-top: 5px;
+        }
+
+        .system-status span {
+            color: var(--secondary-color);
+        }
+
+        .text-flicker {
+            animation: text-flicker-anim 0.1s infinite alternate;
+        }
+
+        @keyframes text-flicker-anim {
+            from {
+                text-shadow: 0 0 5px var(--glow-color), 0 0 2px var(--secondary-color);
+                color: var(--secondary-color);
+            }
+
+            to {
+                text-shadow: 0 0 5px var(--glow-color);
+                color: var(--primary-color);
+            }
+        }
+
+        .screen-shake {
+            animation: screen-shake-anim 0.4s 1;
+        }
+
+        @keyframes screen-shake-anim {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-5px);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(5px);
+            }
+        }
+
+        .border-flash {
+            animation: border-flash-anim 0.3s 1;
+        }
+
+        @keyframes border-flash-anim {
+
+            0%,
+            100% {
+                border-color: var(--primary-color);
+            }
+
+            50% {
+                border-color: var(--secondary-color);
+            }
+        }
+
+        @keyframes eye-pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 7px rgba(255, 0, 0, 0.7));
+            }
+
+            50% {
+                transform: scale(1.05);
+                filter: drop-shadow(0 0 14px rgba(255, 0, 0, 1));
+            }
+        }
+
+        #reboot-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 50;
+            color: var(--primary-color);
+            font-family: 'VT323', monospace;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+
+        #reboot-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #end-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 30;
+            color: var(--primary-color);
+            font-family: 'VT323', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 2s ease-in-out;
+        }
+
+        #end-screen.active {
+            opacity: 1;
+        }
+
+        #end-screen h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        #end-screen p {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+        }
+
+        /* --- Chaos & Game Styles --- */
+        .chaos-active .main-container {
+            animation: chaos-shake 10s infinite linear;
+        }
+
+        @keyframes chaos-shake {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            10%,
+            90% {
+                transform: translate(-2px, 1px);
+            }
+
+            20%,
+            80% {
+                transform: translate(1px, -2px);
+            }
+
+            30%,
+            70% {
+                filter: hue-rotate(90deg);
+            }
+
+            40%,
+            60% {
+                transform: translate(2px, 2px);
+            }
+
+            50% {
+                filter: none;
+            }
+        }
+
+        #game-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 30;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: #000;
+            opacity: 0;
+            transition: opacity 2s;
+        }
+
+        #game-container.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        #eye {
+            width: 150px;
+            height: 150px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.2s;
+            cursor: pointer;
+            --pupil-height: 20px;
+            --pupil-color: var(--secondary-color);
+        }
+
+        #eye::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: var(--pupil-height);
+            background: var(--pupil-color);
+            border-radius: 50%;
+            transition: height 0.3s, background-color 0.3s;
+        }
+
+        #close-sequence-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            pointer-events: none;
+        }
+
+        #close-sequence-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #reboot-btn {
+            font-family: 'VT323', monospace;
+            font-size: 2rem;
+            background: transparent;
+            border: none;
+            color: var(--primary-color);
+            padding: 0;
+            width: 80px;
+            height: 80px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px var(--glow-color);
+            border-radius: 50%;
+        }
+
+        #reboot-btn:hover,
+        #reboot-btn.hover-effect {
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        #reboot-btn.struggle {
+            animation: reboot-flicker 0.4s infinite;
+            will-change: box-shadow;
+        }
+
+        @keyframes reboot-flicker {
+            0% {
+                box-shadow: 0 0 10px var(--glow-color);
+            }
+
+            20% {
+                box-shadow: 0 0 25px var(--secondary-color), inset 0 0 10px var(--secondary-color);
+            }
+
+            40% {
+                box-shadow: 0 0 10px var(--glow-color);
+            }
+
+            60% {
+                box-shadow: 0 0 25px var(--primary-color);
+            }
+
+            80% {
+                box-shadow: 0 0 10px var(--secondary-color);
+            }
+
+            100% {
+                box-shadow: 0 0 20px var(--glow-color);
+            }
+        }
+
+        #reboot-btn svg {
+            width: 100%;
+            height: 100%;
+            transition: all 0.3s;
+        }
+
+        #reboot-btn svg path {
+            stroke: var(--primary-color);
+        }
+
+        #reboot-btn:hover svg path,
+        #reboot-btn.hover-effect svg path {
+            stroke: var(--secondary-color);
+        }
+
+        #closing-eye {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            z-index: 50;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Cpath%20d='M10%2050%20Q%2050%200,%2090%2050%20Q%2050%20100,%2010%2050%20Z'%20fill='%23400'/%3E%3Ccircle%20cx='50'%20cy='50'%20r='22'%20fill='%23f00'/%3E%3Cellipse%20cx='50'%20cy='50'%20rx='5'%20ry='22'%20fill='%23000'/%3E%3Cpath%20d='M50,50%20C%2065,35%2080,30%2090,25%20M50,50%20C%2035,35%2020,30%2010,25%20M50,50%20C%2065,65%2080,70%2090,75%20M50,50%20C%2035,65%2020,70%2010,75'%20stroke-width='1'%20stroke='%23a00'%20fill='none'/%3E%3C/svg%3E");
+            background-size: contain;
+            transition: opacity 0.5s;
+            opacity: 0;
+        }
+
+        #closing-eye.pulse {
+            animation: eye-pulse 2.5s ease-in-out infinite;
+        }
+
+        #closing-eye.press {
+            animation: eye-press 0.2s linear;
+        }
+
+        @keyframes eye-press {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(0.8);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        #closing-eye.visible {
+            opacity: 1;
+        }
+
+        #minimized-tab {
+            position: fixed;
+            bottom: 0;
+            left: 20px;
+            background: var(--primary-color);
+            color: var(--main-bg-color);
+            padding: 5px 15px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            z-index: 15;
+            box-shadow: 0 0 10px var(--glow-color);
+            transition: all 0.3s;
+        }
+
+        #minimized-tab.hidden {
+            display: none;
+        }
+
+        .main-container.maximized {
+            width: 100vw;
+            height: 100vh;
+            top: 0 !important;
+            left: 0 !important;
+            max-width: none;
+            max-height: none;
+            resize: none;
+        }
+
+        .page-hidden *,
+        .page-hidden *::before,
+        .page-hidden *::after {
+            animation-play-state: paused !important;
+            transition: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stars-bg"></div>
+    <div class="vignette"></div>
+    <div id="reboot-overlay"></div>
+    <div id="close-sequence-overlay">
+        <button id="reboot-btn" title="Sistemi Yeniden Başlat">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 20 V 50 M 70.5 39.5 A 30 30 0 1 1 29.5 39.5" stroke-width="8" stroke-linecap="round"
+                    fill="none" />
+            </svg>
+        </button>
+    </div>
+    <div id="closing-eye"></div>
+    <div id="end-screen">
+        <h2>SİNYAL STABİLİZE EDİLDİ.</h2>
+        <p>TEŞEKKÜRLER.</p>
+    </div>
+    <div id="game-container">
+        <h2 id="game-status">GÖZÜ MÜHÜRLE</h2>
+        <div id="eye"></div>
+        <p id="game-timer">SÜRE: 30</p>
+    </div>
+    <div class="scanlines"></div>
+    <div id="minimized-tab" class="hidden"></div>
+
+    <div class="main-container">
+        <header class="window-header">
+            <div>
+                <span class="header-title" data-translate-key="headerTitle">[ SİSTEM KONSOLU ]</span>
+                <span class="lang-switcher">
+                    <span data-lang="tr" class="active">TR</span>
+                    <span data-lang="en">EN</span>
+                    <span data-lang="ru">RU</span>
+                    <span data-lang="zh">ZH</span>
+                    <span data-lang="ja">JA</span>
+                </span>
+            </div>
+            <div class="header-buttons">
+                <span id="minimize-btn" title="Küçült">_</span>
+                <span id="maximize-btn" title="Ekranı Kapla">[]</span>
+                <span id="close-btn" title="Kapat">X</span>
+            </div>
+        </header>
+
+        <main>
+            <h1 id="main-title" data-text="AD SOYAD" data-translate-key="mainTitle">Ercüment Berke Arastaman</h1>
+
+            <nav>
+                <button data-target="hakkimda" class="active" data-translate-key="navAbout">HAKKIMDA</button>
+                <button data-target="projeler" data-translate-key="navProjects">PROJELER</button>
+                <button data-target="iletisim" data-translate-key="navContact">İLETİŞİM</button>
+            </nav>
+
+            <section id="hakkimda" class="content-section active">
+                <h2 data-translate-key="aboutTitle">Ben Kimim?</h2>
+                <p data-translate-key="aboutParagraph">
+                    Dijital evrenin derinliklerinden gelen bir geliştirici ve tasarımcıyım.
+                    Kod satırlarını ve pikselleri, bilinmeyenin estetiğiyle birleştirerek
+                    interaktif deneyimler yaratıyorum. Boş zamanlarımda evrenin sırlarını
+                    çözmeye çalışır, derleme hatalarıyla savaşırım.
+                </p>
+                <br>
+                <h3 data-translate-key="skillsTitle">> Yetenekler</h3>
+                <div class="skills-list">
+                    <span>[ JAVASCRIPT ]</span>
+                    <span>[ REACT / VUE ]</span>
+                    <span>[ NODE.JS ]</span>
+                    <span>[ THREE.JS / WEBGL ]</span>
+                    <span>[ GLSL ]</span>
+                    <span>[ PYTHON ]</span>
+                    <span>[ UI/UX TASARIM ]</span>
+                </div>
+            </section>
+
+            <section id="projeler" class="content-section">
+                <h2 data-translate-key="projectsTitle">Projelerim</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3 data-translate-key="project1Title">Proje: 'Nyarlathotep'</h3>
+                        <p data-translate-key="project1Desc">Kozmik bir varlığın zihninde gezinen interaktif bir web
+                            deneyi. Three.js ve WebGL shader'ları kullanıldı.</p>
+                        <div class="project-links">
+                            <a href="#" target="_blank" data-translate-key="projectLinkGithub">[ GITHUB ]</a>
+                            <a href="#" target="_blank" data-translate-key="projectLinkDemo">[ DEMO ]</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3 data-translate-key="project2Title">Proje: 'R'lyeh'</h3>
+                        <p data-translate-key="project2Desc">Batık şehir R'lyeh'in yordamsal olarak oluşturulmuş bir
+                            haritası. React ve D3.js ile geliştirildi.</p>
+                        <div class="project-links">
+                            <a href="#" target="_blank" data-translate-key="projectLinkGithub">[ GITHUB ]</a>
+                            <a href="#" target="_blank" data-translate-key="projectLinkDemo">[ DEMO ]</a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3 data-translate-key="project3Title">Proje: 'Elder Sign'</h3>
+                        <p data-translate-key="project3Desc">Kriptografik bulmacalar ve eski sembollerle dolu bir CTF
+                            (Capture The Flag) platformu.</p>
+                        <div class="project-links">
+                            <a href="#" target="_blank" data-translate-key="projectLinkGithub">[ GITHUB ]</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="iletisim" class="content-section">
+                <h2 data-translate-key="contactTitle">Sinyal Gönder</h2>
+                <div class="contact-links">
+                    <a href="#" target="_blank" data-translate-key="contactEmail">> E-POSTA:
+                        sinyal@bilinmeyen.domain</a>
+                    <a href="#" target="_blank" data-translate-key="contactGithub">> GITHUB: github.com/kullaniciadi</a>
+                    <a href="#" target="_blank" data-translate-key="contactLinkedin">> LINKEDIN:
+                        linkedin.com/in/kullaniciadi</a>
+                </div>
+            </section>
+
+        </main>
+
+        <footer>
+            <div class="terminal-output" id="terminal-output"></div>
+            <div class="prompt-line">
+                <span>[Y2K@COSMOS]$</span>
+                <input type="text" id="terminal-input" autofocus />
+            </div>
+            <div class="system-status">
+                <div>SİNYAL GÜCÜ: <span id="status-signal">--%</span></div>
+                <div>GERÇEKLİK BÜTÜNLÜĞÜ: <span id="status-integrity">--%</span></div>
+                <div>İŞLEM YÜKÜ: <span id="status-load">--%</span></div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const sleep = ms => new Promise(res => setTimeout(res, ms));
+
+        // --- Core Elements ---
+        const container = document.querySelector('.main-container');
+        const mainContent = document.querySelector('main');
+        const terminalInput = document.getElementById('terminal-input');
+        const terminalOutput = document.getElementById('terminal-output');
+
+        // --- i18n ---
+        let currentLanguage = 'tr';
+        const translations = {
+            'tr': {
+                headerTitle: '[ SİSTEM KONSOLU ]',
+                mainTitle: 'Ercüment Berke Arastaman',
+                navAbout: 'HAKKIMDA',
+                navProjects: 'PROJELER',
+                navContact: 'İLETİŞİM',
+                aboutTitle: 'Ben Kimim?',
+                aboutParagraph: 'Dijital evrenin derinliklerinden gelen bir geliştirici ve tasarımcıyım. Kod satırlarını ve pikselleri, bilinmeyenin estetiğiyle birleştirerek interaktif deneyimler yaratıyorum. Boş zamanlarımda evrenin sırlarını çözmeye çalışır, derleme hatalarıyla savaşırım.',
+                skillsTitle: '> Yetenekler',
+                projectsTitle: 'Projelerim',
+                project1Title: "Proje: 'Nyarlathotep'",
+                project1Desc: "Kozmik bir varlığın zihninde gezinen interaktif bir web deneyi. Three.js ve WebGL shader'ları kullanıldı.",
+                project2Title: "Proje: 'R'lyeh'",
+                project2Desc: "Batık şehir R'lyeh'in yordamsal olarak oluşturulmuş bir haritası. React ve D3.js ile geliştirildi.",
+                project3Title: "Proje: 'Elder Sign'",
+                project3Desc: "Kriptografik bulmacalar ve eski sembollerle dolu bir CTF (Capture The Flag) platformu.",
+                projectLinkGithub: '[ GITHUB ]',
+                projectLinkDemo: '[ DEMO ]',
+                contactTitle: 'Sinyal Gönder',
+                contactEmail: '> E-POSTA: sinyal@bilinmeyen.domain',
+                contactGithub: '> GITHUB: github.com/kullaniciadi',
+                contactLinkedin: '> LINKEDIN: linkedin.com/in/kullaniciadi',
+                terminalWelcome: "Y2K-COSMOS Arayüzü v1.7 aktif. Yardım için '<b>help</b>' yazın.",
+                helpTitle: 'Mevcut Komutlar:',
+                helpCmds: [
+                    "<b>help</b>: Bu yardım menüsünü gösterir.",
+                    "<b>nav [bölüm]</b>: UI bölümüne gider (hakkimda, projeler, iletisim).",
+                    "<b>ls [dizin]</b>: Dizin içeriğini listeler.",
+                    "<b>cat [dosya]</b>: Dosya içeriğini gösterir.",
+                    "<b>scan</b>: Sistemi anormalliklere karşı tarar.",
+                    "<b>connect</b>: Uzak bir sinyale bağlanmayı dener.",
+                    "<b>decode [metin]</b>: Metni sistem diline çevirir.",
+                    "<b>audio [0-100]</b>: Ortam sesini yüzde olarak ayarlar.",
+                    "<b>clear</b>: Terminal ekranını temizler.",
+                    "<b>reboot</b>: Sistemi yeniden başlatır.",
+                ],
+                cmdError: "Hata:",
+                cmdCmdNotFound: "Komut bulunamadı ->",
+                cmdNavSuccess: "Navigasyon başarılı:",
+                cmdNavError: "Bölüm bulunamadı ->",
+                cmdLsError: "Dizin bulunamadı ->",
+                cmdCatErrorPath: "Lütfen tam dosya yolu belirtin (örn: /logs/log_734.txt).",
+                cmdCatErrorFile: "Dosya bulunamadı ->",
+                cmdCatErrorDir: "bir dizindir, dosya değil.",
+                cmdScanUnstable: "UYARI: Gerçeklik bütünlüğünde sapmalar tespit edildi! Sistem kararsız. `reboot` komutu geçici bir çözüm olabilir.",
+                cmdScanChaos: "TARAMA BAŞARISIZ. SİSTEM YANIT VERMİYOR. HER YERDE... GÖZLER VAR.",
+                cmdScanNominal: "Sistem durumu nominal. Şimdilik.",
+                cmdConnectResponse: "BAĞLANTI DENEMESİ v2...<br>[>...................] Sinyal Yakalandı<br>[==>.................] Protokol Anlaşması... BAŞARISIZ<br>[===>................] Alternatif Frekans Aranıyor...<br>[=====>..............] UYARI: Kaynak bilinçli.<br>HATA: Bağlantı reddedildi. Tekrar denemeyin.",
+                cmdDecodeUsage: "Kullanım: decode [metin]",
+                cmdAudioSuccess: "Ses seviyesi %${level} olarak ayarlandı.",
+                cmdAudioUsage: "Kullanım: audio [0-100]",
+                rebootSequence: ["Sistem yeniden başlatılıyor...", "Bellek temizleniyor: 2048 PB OK", "Gerçeklik matrisi kontrol ediliyor...", "UYARI: Sapma 0.012% tespit edildi.", "Kozmik arayüz yükleniyor...", "Y2K-COSMOS v1.7 başlatılıyor.", "Hoşgeldiniz."],
+                rebootComplete: "Sistem yeniden başlatıldı. Yardım için '<b>help</b>' yazın.",
+                cmdAwakenSuccess: "GÖZ AÇILDI. SİSTEM KARARSIZ.",
+                cmdSusturNoTarget: "Susturulacak bir şey yok.",
+                cmdSusturSuccess: "Sinyal... kesildi. Sessizlik.",
+                cmdStabilizeNoTarget: "Stabilize edilecek bir kararsızlık yok.",
+                cmdStabilizeSuccess: "Stabilizasyon dizisi başlatıldı... Son bir görev var.",
+                log734: "Gözlem_01: Sinyal zayıf ama istikrarlı. Kökeni... yıldızların arasında değil, içinde. Kendini tekrar eden bir desen, bir tür dil. Ama bir alfabe değil. Bir anatomi.",
+                log812: "Gözlem_02: Desenler değişiyor. Geometrik şekillerden biyolojik şemalara geçiyor. Bu bir mesaj değil. Bu bir büyüme evresi.",
+                log955: "Gözlem_03: Sessizlik. Sinyal kesildi. Hayır, kesilmedi. Odaklandı. Artık dışarıya yayın yapmıyor. İçeride bir şeyi dinliyor. Beni. BİZİ. Onu `uyandır`.",
+                logCorrupt: "D$$ngü k$$rıldı. Göz... art$$k sadece bakm$$yor. Görüyor. Onu `sustur`. Veya... dengeyi bul: *d-2-k-@-l-@-*.`",
+                autonomousMessages: ["...sesler...", "Neden dinliyorsun?", "Gördüğünü sandığın şey... o değil.", "...duvarlar inceliyor...", "Yıldızlar yanlış.", "Döngüyü kır."],
+                gameTitle: "GÖZÜ MÜHÜRLEMEK İÇİN TIKLA",
+                gameTimerLabel: "KALAN MÜHÜRLEME:",
+                gameWin: "GÖZ MÜHÜRLENDİ.",
+                gameWinSub: "Evren sana minnettar... şimdilik.",
+                gameLose: "GÖZ AÇILDI.",
+                gameLoseSub: "Gerçeklik çöktü.",
+                rebootBtn: "REBOOT",
+                endScreenTitle: "SİNYAL STABİLİZE EDİLDİ.",
+                endScreenSub: "TEŞEKKÜRLER."
+            },
+            'en': {
+                headerTitle: '[ SYSTEM CONSOLE ]',
+                mainTitle: 'Ercüment Berke Arastaman',
+                navAbout: 'ABOUT',
+                navProjects: 'PROJECTS',
+                navContact: 'CONTACT',
+                aboutTitle: 'Who Am I?',
+                aboutParagraph: 'A developer and designer from the depths of the digital universe. I merge lines of code and pixels with the aesthetics of the unknown to create interactive experiences. In my spare time, I try to solve the secrets of the universe and battle compilation errors.',
+                skillsTitle: '> Skills',
+                projectsTitle: 'My Projects',
+                project1Title: "Project: 'Nyarlathotep'",
+                project1Desc: 'An interactive web experiment navigating the mind of a cosmic entity. Built with Three.js and WebGL shaders.',
+                project2Title: "Project: 'R'lyeh'",
+                project2Desc: 'A procedurally generated map of the sunken city of R\'lyeh. Developed with React and D3.js.',
+                project3Title: "Project: 'Elder Sign'",
+                project3Desc: 'A CTF (Capture The Flag) platform filled with cryptographic puzzles and ancient symbols.',
+                projectLinkGithub: '[ GITHUB ]',
+                projectLinkDemo: '[ DEMO ]',
+                contactTitle: 'Send Signal',
+                contactEmail: '> E-MAIL: signal@unknown.domain',
+                contactGithub: '> GITHUB: github.com/username',
+                contactLinkedin: '> LINKEDIN: linkedin.com/in/username',
+                terminalWelcome: "Y2K-COSMOS Interface v1.7 active. Type '<b>help</b>' for assistance.",
+                helpTitle: 'Available Commands:',
+                helpCmds: [
+                    "<b>help</b>: Shows this help menu.",
+                    "<b>nav [section]</b>: Navigates to a UI section (about, projects, contact).",
+                    "<b>ls [directory]</b>: Lists directory contents.",
+                    "<b>cat [file]</b>: Displays file contents.",
+                    "<b>scan</b>: Scans the system for anomalies.",
+                    "<b>connect</b>: Attempts to connect to a remote signal.",
+                    "<b>decode [text]</b>: Translates text into the system language.",
+                    "<b>audio [0-100]</b>: Sets the ambient audio volume percentage.",
+                    "<b>clear</b>: Clears the terminal screen.",
+                    "<b>reboot</b>: Reboots the system.",
+                ],
+                cmdError: "Error:",
+                cmdCmdNotFound: "Command not found ->",
+                cmdNavSuccess: "Navigation successful:",
+                cmdNavError: "Section not found ->",
+                cmdLsError: "Directory not found ->",
+                cmdCatErrorPath: "Please specify a full path (e.g., /logs/log_734.txt).",
+                cmdCatErrorFile: "File not found ->",
+                cmdCatErrorDir: "is a directory, not a file.",
+                cmdScanUnstable: "WARNING: Reality integrity deviations detected! System unstable. `reboot` might be a temporary solution.",
+                cmdScanChaos: "SCAN FAILED. SYSTEM UNRESPONSIVE. EYES... EVERYWHERE.",
+                cmdScanNominal: "System status nominal. For now.",
+                cmdConnectResponse: "CONNECTION ATTEMPT v2...<br>[>...................] Signal Acquired<br>[==>.................] Protocol Handshake... FAILED<br>[===>................] Searching Alternate Frequency...<br>[=====>..............] WARNING: Source is sentient.<br>ERROR: Connection refused. Do not try again.",
+                cmdDecodeUsage: "Usage: decode [text]",
+                cmdAudioSuccess: "Audio volume set to %${level}.",
+                cmdAudioUsage: "Usage: audio [0-100]",
+                rebootSequence: ["System rebooting...", "Memory flush: 2048 PB OK", "Checking reality matrix...", "WARNING: Deviation 0.012% detected.", "Loading cosmic interface...", "Booting Y2K-COSMOS v1.7.", "Welcome."],
+                rebootComplete: "System rebooted. Type '<b>help</b>' for assistance.",
+                rebootBtn: "REBOOT",
+                cmdAwakenSuccess: "THE EYE IS OPEN. SYSTEM UNSTABLE.",
+                cmdSusturNoTarget: "Nothing to silence.",
+                cmdSusturSuccess: "Signal... lost. Silence.",
+                cmdStabilizeNoTarget: "No instability to stabilize.",
+                cmdStabilizeSuccess: "Stabilization sequence initiated... One final task remains.",
+                log734: "Observation_01: Signal is faint but steady. Origin... not between the stars, but within them. A repeating pattern, a kind of language. But not an alphabet. An anatomy.",
+                log812: "Observation_02: The patterns are changing. Shifting from geometric shapes to biological schematics. This is not a message. This is a growth phase.",
+                log955: "Observation_03: Silence. The signal was lost. No, not lost. Focused. It's no longer broadcasting outward. It's listening to something inside. Me. US. `awaken` it.",
+                logCorrupt: "L$$p br_ken. The eye... it's not just looking anymore. It sees. `sustur` it. Or... find the balance: *d-2-k-@-l-@-*.`",
+                autonomousMessages: ["...the voices...", "Why are you listening?", "What you think you see... isn't.", "...the walls are thinning...", "The stars are wrong.", "Break the loop."],
+                gameTitle: "CLICK TO SEAL THE EYE",
+                gameTimerLabel: "SEALS REMAINING:",
+                gameWin: "THE EYE IS SEALED.",
+                gameWinSub: "The universe is grateful... for now.",
+                gameLose: "THE EYE OPENED.",
+                gameLoseSub: "Reality has collapsed.",
+                rebootBtn: "REBOOT",
+                endScreenTitle: "SIGNAL STABILIZED.",
+                endScreenSub: "THANK YOU."
+            },
+            'ru': {
+                headerTitle: '[ СИСТЕМНАЯ КОНСОЛЬ ]',
+                mainTitle: 'Ercüment Berke Arastaman',
+                navAbout: 'ОБО МНЕ',
+                navProjects: 'ПРОЕКТЫ',
+                navContact: 'КОНТАКТЫ',
+                aboutTitle: 'Кто я?',
+                aboutParagraph: 'Разработчик и дизайнер из глубин цифровой вселенной. Я объединяю строки кода и пиксели с эстетикой неизведанного для создания интерактивных впечатлений. В свободное время я пытаюсь разгадать тайны вселенной и сражаюсь с ошибками компиляции.',
+                skillsTitle: '> Навыки',
+                projectsTitle: 'Мои проекты',
+                project1Title: "Проект: 'Ньярлатхотеп'",
+                project1Desc: 'Интерактивный веб-эксперимент, путешествующий по разуму космической сущности. Создано с помощью Three.js и шейдеров WebGL.',
+                project2Title: "Проект: 'Р\'льех'",
+                project2Desc: 'Процедурно сгенерированная карта затонувшего города Р\'льеха. Разработано на React и D3.js.',
+                project3Title: "Проект: 'Знак Древних'",
+                project3Desc: 'Платформа CTF (Захват флага), наполненная криптографическими головоломками и древними символами.',
+                projectLinkGithub: '[ GITHUB ]',
+                projectLinkDemo: '[ ДЕМО ]',
+                contactTitle: 'Отправить сигнал',
+                contactEmail: '> E-MAIL: signal@unknown.domain',
+                contactGithub: '> GITHUB: github.com/username',
+                contactLinkedin: '> LINKEDIN: linkedin.com/in/username',
+                terminalWelcome: "Интерфейс Y2K-COSMOS v1.7 активен. Введите '<b>help</b>' для помощи.",
+                helpTitle: 'Доступные команды:',
+                helpCmds: [
+                    "<b>help</b>: Показать это меню помощи.",
+                    "<b>nav [раздел]</b>: Переход к разделу интерфейса (about, projects, contact).",
+                    "<b>ls [каталог]</b>: Показать содержимое каталога.",
+                    "<b>cat [файл]</b>: Показать содержимое файла.",
+                    "<b>scan</b>: Сканировать систему на наличие аномалий.",
+                    "<b>connect</b>: Попытка подключения к удаленному сигналу.",
+                    "<b>decode [текст]</b>: Перевести текст на системный язык.",
+                    "<b>audio [0-100]</b>: Установить громкость фонового звука в процентах.",
+                    "<b>clear</b>: Очистить экран терминала.",
+                    "<b>reboot</b>: Перезагрузить систему.",
+                ],
+                cmdError: "Ошибка:",
+                cmdCmdNotFound: "Команда не найдена ->",
+                cmdNavSuccess: "Навигация успешна:",
+                cmdNavError: "Раздел не найден ->",
+                cmdLsError: "Каталог не найден ->",
+                cmdCatErrorPath: "Укажите полный путь (например, /logs/log_734.txt).",
+                cmdCatErrorFile: "Файл не найден ->",
+                cmdCatErrorDir: "это каталог, а не файл.",
+                cmdScanUnstable: "ВНИМАНИЕ: Обнаружены отклонения в целостности реальности! Система нестабильна. `reboot` может быть временным решением.",
+                cmdScanChaos: "СКАНИРОВАНИЕ НЕУДАЧНО. СИСТЕМА НЕ ОТВЕЧАЕТ. ГЛАЗА... ПОВСЮДЮ.",
+                cmdScanNominal: "Состояние системы в норме. Пока что.",
+                cmdConnectResponse: "ПОПЫТКА СОЕДИНЕНИЯ v2...<br>[>...................] Сигнал получен<br>[==>.................] Согласование протокола... НЕУДАЧA<br>[===>................] Поиск альтернативной частоты...<br>[=====>..............] ВНИМАНИЕ: Источник разумен.<br>ОШИБКА: В соединении отказано. Не повторять.",
+                cmdDecodeUsage: "Использование: decode [текст]",
+                cmdAudioSuccess: "Громкость звука установлена на %${level}.",
+                cmdAudioUsage: "Использование: audio [0-100]",
+                rebootSequence: ["Перезагрузка системы...", "Очистка памяти: 2048 ПБ OK", "Проверка матрицы реальности...", "ВНИМАНИЕ: Обнаружено отклонение 0.012%.", "Загрузка космического интерфейса...", "Запуск Y2K-COSMOS v1.7.", "Добро пожаловать."],
+                rebootComplete: "Система перезагружена. Введите '<b>help</b>' для помощи.",
+                rebootBtn: "REBOOT",
+                cmdAwakenSuccess: "ГЛАЗ ОТКРЫТ. СИСТЕМА НЕСТАБИЛЬНА.",
+                cmdSusturNoTarget: "Нечего заглушать.",
+                cmdSusturSuccess: "Сигнал... потерян. Тишина.",
+                cmdStabilizeNoTarget: "Нет нестабильности для стабилизации.",
+                cmdStabilizeSuccess: "Последовательность стабилизации инициирована... Осталась последняя задача.",
+                log734: "Наблюдение_01: Сигнал слабый, но стабильный. Источник... не между звездами, а внутри них. Повторяющийся узор, своего рода язык. Но не алфавит. Анатомия.",
+                log812: "Наблюдение_02: Узоры меняются. От геометрических форм к биологическим схемам. Это не сообщение. Это фаза роста.",
+                log955: "Наблюдение_03: Тишина. Сигнал пропал. Нет, не пропал. Сфокусировался. Он больше не вещает наружу. Он слушает что-то внутри. Меня. НАС. `awaken` его.",
+                logCorrupt: "Ц$$кл_разорван. Глаз... он больше не просто смотрит. Он видит. `sustur` его. Или... найди баланс: *d-2-k-@-l-@-*.`",
+                autonomousMessages: ["...голоса...", "Почему ты слушаешь?", "То, что ты видишь... не является им.", "...стены истончаются...", "Звезды неправильные.", "Разорви цикл."],
+                gameTitle: "НАЖИМАЙ, ЧТОБЫ ЗАПЕЧАТАТЬ ГЛАЗ",
+                gameTimerLabel: "ПЕЧАТЕЙ ОСТАЛОСЬ:",
+                gameWin: "ГЛАЗ ЗАПЕЧАТАН.",
+                gameWinSub: "Вселенная благодарна... пока что.",
+                gameLose: "ГЛАЗ ОТКРЫЛСЯ.",
+                gameLoseSub: "Реальность рухнула.",
+                rebootBtn: "REBOOT",
+                endScreenTitle: "СИГНАЛ СТАБИЛИЗИРОВАН.",
+                endScreenSub: "СПАСИБО."
+            },
+            'zh': {
+                headerTitle: '[ 系统控制台 ]',
+                mainTitle: 'Ercüment Berke Arastaman',
+                navAbout: '关于我',
+                navProjects: '项目',
+                navContact: '联系',
+                aboutTitle: '我是谁？',
+                aboutParagraph: '一位来自数字宇宙深处的开发者和设计师。我将代码和像素与未知的神秘美学相结合，创造互动体验。在业余时间，我试图解开宇宙的秘密，并与编译错误作斗争。',
+                skillsTitle: '> 技能',
+                projectsTitle: '我的项目',
+                project1Title: "项目: '奈亚拉托提普'",
+                project1Desc: '一个在宇宙实体思维中穿梭的互动网络实验。使用Three.js和WebGL着色器构建。',
+                project2Title: "项目: '拉莱耶'",
+                project2Desc: '沉没都市拉莱耶的程序生成地图。使用React和D3.js开发。',
+                project3Title: "项目: '旧印'",
+                project3Desc: '一个充满密码学谜题和古代的符号的CTF（夺旗赛）平台。',
+                projectLinkGithub: '[ GITHUB ]',
+                projectLinkDemo: '[ 演示 ]',
+                contactTitle: '发送信号',
+                contactEmail: '> 电子邮件: signal@unknown.domain',
+                contactGithub: '> GITHUB: github.com/username',
+                contactLinkedin: '> LINKEDIN: linkedin.com/in/username',
+                terminalWelcome: "Y2K-COSMOS 界面 v1.7 已激活。输入 '<b>help</b>' 获取帮助。",
+                helpTitle: '可用命令:',
+                helpCmds: [
+                    "<b>help</b>: 显示此帮助菜单。",
+                    "<b>nav [section]</b>: 导航到UI部分 (about, projects, contact)。",
+                    "<b>ls [directory]</b>: 列出目录内容。",
+                    "<b>cat [file]</b>: 显示文件内容。",
+                    "<b>scan</b>: 扫描系统异常。",
+                    "<b>connect</b>: 尝试连接到远程信号。",
+                    "<b>decode [text]</b>: 将文本翻译成系统语言。",
+                    "<b>audio [0-100]</b>: 设置环境音量百分比。",
+                    "<b>clear</b>: 清除终端屏幕。",
+                    "<b>reboot</b>: 重启系统。",
+                ],
+                cmdError: "错误:",
+                cmdCmdNotFound: "未找到命令 ->",
+                cmdNavSuccess: "导航成功:",
+                cmdNavError: "未找到部分 ->",
+                cmdLsError: "未找到目录 ->",
+                cmdCatErrorPath: "请输入完整路径 (例如, /logs/log_734.txt)。",
+                cmdCatErrorFile: "未找到文件 ->",
+                cmdCatErrorDir: "是目录，不是文件。",
+                cmdScanUnstable: "警告: 检测到现实完整性偏差！系统不稳定。`reboot` 可能是一时解决方案。",
+                cmdScanChaos: "扫描失败。系统无响应。到处都是...眼睛。",
+                cmdScanNominal: "系统状态正常。暂时。",
+                cmdConnectResponse: "连接尝试 v2...<br>[>...................] 信号已捕获<br>[==>.................] 协议握手... 失败<br>[===>................] 搜索备用频率...<br>[=====>..............] 警告: 信号源有感知。<br>错误: 连接被拒绝。请勿重试。",
+                cmdDecodeUsage: "用法: decode [text]",
+                cmdAudioSuccess: "音量设置为 %${level}。",
+                cmdAudioUsage: "用法: audio [0-100]",
+                rebootSequence: ["系统重启中...", "内存刷新: 2048 PB OK", "检查现实矩阵...", "警告: 检测到0.012%偏差。", "加载宇宙界面...", "启动 Y2K-COSMOS v1.7。", "欢迎。"],
+                rebootComplete: "系统已重启。输入 '<b>help</b>' 获取帮助。",
+                rebootBtn: "REBOOT",
+                cmdAwakenSuccess: "眼睛已睁开。系统不稳定。",
+                cmdSusturNoTarget: "无可静默之物。",
+                cmdSusturSuccess: "信号...丢失。寂静。",
+                cmdStabilizeNoTarget: "没有需要稳定的不稳定性。",
+                cmdStabilizeSuccess: "稳定程序已启动... 剩下最后一个任务。",
+                log734: "观察_01: 信号微弱但稳定。来源...不在星际之间，而在其内部。一种重复的模式，一种语言。但不是字母表。是一种解剖结构。",
+                log812: "观察_02: 模式正在改变。从几何形状转变为生物示意图。这不是信息。这是一个生长阶段。",
+                log955: "观察_03: 寂静。信号丢失了。不，不是丢失。是聚焦了。它不再向外广播。它在倾听内部的东西。我。我们。`awaken` 它。",
+                logCorrupt: "循$$环_已破。眼睛...它不再只是看着。它在凝视。`sustur` 它。或者...找到平衡: *d-2-k-@-l-@-*.`",
+                autonomousMessages: ["...那些声音...", "你为什么在听？", "你所看到的...并非真实。", "...墙壁正在变薄...", "星星是错的。", "打破循环。"],
+                gameTitle: "点击以封印眼睛",
+                gameTimerLabel: "剩余封印:",
+                gameWin: "眼睛已被封印。",
+                gameWinSub: "宇宙感激不尽...暂时。",
+                gameLose: "眼睛睁开了。",
+                gameLoseSub: "现实已崩溃。",
+                rebootBtn: "REBOOT",
+                endScreenTitle: "信号已稳定。",
+                endScreenSub: "谢谢。"
+            },
+            'ja': {
+                headerTitle: '[ システムコンソール ]',
+                mainTitle: 'Ercüment Berke Arastaman',
+                navAbout: '私について',
+                navProjects: 'プロジェクト',
+                navContact: 'コンタクト',
+                aboutTitle: '自己紹介',
+                aboutParagraph: 'デジタル宇宙の深淵から来た開発者兼デザイナーです。コードの行とピクセルを未知の美学と融合させ、インタラクティブな体験を創造します。余暇には、宇宙の秘密を解き明かし、コンパイルエラーと戦っています。',
+                skillsTitle: '> スキル',
+                projectsTitle: '私のプロジェクト',
+                project1Title: "プロジェクト: 'ニャルラトホテプ'",
+                project1Desc: '宇宙的存在の精神を航海するインタラクティブなウェブ体験。Three.jsとWebGLシェーダーで構築。',
+                project2Title: "プロジェクト: 'ルルイエ'",
+                project2Desc: '沈没都市ルルイエの手続き的に生成された地図。ReactとD3.jsで開発。',
+                project3Title: "プロジェクト: '旧き印'",
+                project3Desc: '暗号パズルと古代のシンボルで満たされたCTF（キャプチャー・ザ・フラッグ）プラットフォーム。',
+                projectLinkGithub: '[ GITHUB ]',
+                projectLinkDemo: '[ デモ ]',
+                contactTitle: '信号を送る',
+                contactEmail: '> Eメール: signal@unknown.domain',
+                contactGithub: '> GITHUB: github.com/username',
+                contactLinkedin: '> LINKEDIN: linkedin.com/in/username',
+                terminalWelcome: "Y2K-COSMOSインターフェースv1.7がアクティブです。助けが必要な場合は '<b>help</b>' と入力してください。",
+                helpTitle: '利用可能なコマンド:',
+                helpCmds: [
+                    "<b>help</b>: このヘルプメニューを表示します。",
+                    "<b>nav [section]</b>: UIセクション（about, projects, contact）に移動します。",
+                    "<b>ls [directory]</b>: ディレクトリの内容を一覧表示します。",
+                    "<b>cat [file]</b>: ファイルの内容を表示します。",
+                    "<b>scan</b>: システムの異常をスキャンします。",
+                    "<b>connect</b>: リモート信号への接続を試みます。",
+                    "<b>decode [text]</b>: テキストをシステム言語に翻訳します。",
+                    "<b>audio [0-100]</b>: 環境音の音量をパーセントで設定します。",
+                    "<b>clear</b>: ターミナル画面をクリアします。",
+                    "<b>reboot</b>: システムを再起動します。",
+                ],
+                cmdError: "エラー:",
+                cmdCmdNotFound: "コマンドが見つかりません ->",
+                cmdNavSuccess: "ナビゲーション成功:",
+                cmdNavError: "セクションが見つかりません ->",
+                cmdLsError: "ディレクトリが見つかりません ->",
+                cmdCatErrorPath: "フルパスを指定してください（例: /logs/log_734.txt）。",
+                cmdCatErrorFile: "ファイルが見つかりません ->",
+                cmdCatErrorDir: "はディレクトリであり、ファイルではありません。",
+                cmdScanUnstable: "警告: 現実の完全性に逸脱が検出されました！システムは不安定です。`reboot` が一時的な解決策になるかもしれません。",
+                cmdScanChaos: "スキャン失敗。システム応答なし。至る所に...目。",
+                cmdScanNominal: "システムステータスは正常。今のところは。",
+                cmdConnectResponse: "接続試行 v2...<br>[>...................] 信号捕捉<br>[==>.................] プロトコルハンドシェイク... 失敗<br>[===>................] 代替周波数を検索中...<br>[=====>..............] 警告: ソースは知覚を持っています。<br>エラー: 接続が拒否されました。再試行しないでください。",
+                cmdDecodeUsage: "使用法: decode [text]",
+                cmdAudioSuccess: "音量が %${level} に設定されました。",
+                cmdAudioUsage: "使用法: audio [0-100]",
+                rebootSequence: ["システムを再起動しています...", "メモリをフラッシュ: 2048 PB OK", "現実マトリックスを確認しています...", "警告: 0.012%の逸脱が検出されました。", "宇宙インターフェースを読み込んでいます...", "Y2K-COSMOS v1.7を起動しています。", "ようこそ。"],
+                rebootComplete: "システムが再起動されました。助けが必要な場合は '<b>help</b>' と入力してください。",
+                rebootBtn: "REBOOT",
+                cmdAwakenSuccess: "目が開いた。システムは不安定です。",
+                cmdSusturNoTarget: "沈黙させるものはありません。",
+                cmdSusturSuccess: "信号...ロスト。沈黙。",
+                cmdStabilizeNoTarget: "安定させるべき不安定さはありません。",
+                cmdStabilizeSuccess: "安定化シーケンスが開始されました...最後のタスクが残っています。",
+                log734: "観察_01: 信号は微弱だが安定している。起源は...星々の間ではなく、その中にある。繰り返されるパターン、一種の言語。しかしアルファベットではない。解剖学だ。",
+                log812: "観察_02: パターンが変化している。幾何学的な形から生物学的な図式へ。これはメッセージではない。成長段階だ。",
+                log955: "観察_03: 沈黙。信号が途絶えた。いや、途絶えたのではない。集中したのだ。もはや外部に放送していない。内部の何かを聴いている。私を。我々を。`awaken` それを。",
+                logCorrupt: "ル$$プ_破壊。目は...もはやただ見ているだけではない。視ているのだ。`sustur` それを。あるいは...均衡を見つけよ: *d-2-k-@-l-@-*.`",
+                autonomousMessages: ["...声が...", "なぜ聞いている？", "あなたが見ていると思っているものは...それではない。", "...壁が薄くなっている...", "星々は間違っている。", "ループを断ち切れ。"],
+                gameTitle: "クリックして目を封印せよ",
+                gameTimerLabel: "残りの封印:",
+                gameWin: "目は封印された。",
+                gameWinSub: "宇宙は感謝している...今のところは。",
+                gameLose: "目が開いてしまった。",
+                gameLoseSub: "現実は崩壊した。",
+                rebootBtn: "REBOOT",
+                endScreenTitle: "信号は安定しました。",
+                endScreenSub: "ありがとうございます。"
+            }
+        };
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            // Update active class on switcher
+            document.querySelectorAll('.lang-switcher span').forEach(span => {
+                span.classList.toggle('active', span.dataset.lang === lang);
+            });
+
+            // Translate all elements
+            document.querySelectorAll('[data-translate-key]').forEach(el => {
+                const key = el.dataset.translateKey;
+                const translation = translations[lang][key];
+                if (translation) {
+                    el.innerHTML = translation;
+                    if (el.hasAttribute('data-text')) {
+                        el.dataset.text = translation;
+                    }
+                }
+            });
+            // Special case for terminal welcome message as it's not in the DOM initially
+            terminalOutput.innerHTML = `<div data-translate-key="terminalWelcome">${translations[lang].terminalWelcome}</div>`;
+
+            // Re-trigger animations for dynamic content
+            glitchEffect();
+
+            const activeSection = document.querySelector('.content-section.active');
+            if (activeSection) {
+                const headerEl = activeSection.querySelector('h2');
+                if (headerEl) {
+                    const originalHeaderText = translations[currentLanguage][headerEl.dataset.translateKey] || '';
+                    typeEffect(headerEl, originalHeaderText.replace('> ', ''));
+                }
+            }
+        }
+
+
+        // --- Web Audio API for Ambient Sound ---
+        let audioCtx;
+        let oscillator;
+        let gainNode;
+        let isAudioPlaying = false;
+
+        function initAudio() {
+            if (isAudioPlaying) return;
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+            oscillator = audioCtx.createOscillator();
+            gainNode = audioCtx.createGain();
+
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(40, audioCtx.currentTime);
+
+            const lfo = audioCtx.createOscillator();
+            lfo.type = 'sine';
+            lfo.frequency.setValueAtTime(0.1, audioCtx.currentTime);
+
+            const lfoGain = audioCtx.createGain();
+            lfoGain.gain.setValueAtTime(5, audioCtx.currentTime);
+
+            lfo.connect(lfoGain).connect(oscillator.frequency);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            gainNode.gain.setValueAtTime(0.002, audioCtx.currentTime); // Corrected default volume to be audible but subtle
+
+            oscillator.start();
+            lfo.start();
+            isAudioPlaying = true;
+        }
+
+        function setAudioLevel(level) {
+            if (!audioCtx || !gainNode) return;
+            const gainValue = Math.max(0, Math.min(1, level / 100)) * 0.01; // Max gain is 1%
+            gainNode.gain.setTargetAtTime(gainValue, audioCtx.currentTime, 0.1);
+        }
+
+        document.body.addEventListener('click', () => { if (!audioCtx) initAudio(); }, { once: true });
+        document.body.addEventListener('keydown', () => { if (!audioCtx) initAudio(); }, { once: true });
+
+
+        function toggleAudio(shouldPlay) {
+            if (!audioCtx || !gainNode) return;
+
+            if (shouldPlay) {
+                // This function is only called with 'false' from 'sustur',
+                // but adding a resume logic for future use.
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                // Volume can be restored with the 'audio' command.
+            } else {
+                // 'sustur' command mutes the audio.
+                gainNode.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
+            }
+        }
+
+
+        // --- Glitch Effect for Main Title ---
+        const title = document.getElementById('main-title');
+        const chars = '!<>-_\\/[]{}—=+*^?#________';
+
+        const glitchEffect = () => {
+            const originalText = title.dataset.text;
+            if (!originalText) return;
+            let iterations = 0;
+            const interval = setInterval(() => {
+                title.innerText = originalText.split('')
+                    .map((letter, index) => {
+                        if (index < iterations) {
+                            return originalText[index];
+                        }
+                        return chars[Math.floor(Math.random() * chars.length)];
+                    })
+                    .join('');
+
+                if (iterations >= originalText.length) {
+                    clearInterval(interval);
+                    title.innerText = originalText;
+                }
+                iterations += 1 / 3;
+            }, 30);
+        };
+
+        title.addEventListener('mouseover', glitchEffect);
+        glitchEffect(); // Initial glitch on load
+
+        // --- Draggable Window ---
+        const header = document.querySelector('.window-header');
+
+        let isDragging = false;
+        let offset = { x: 0, y: 0 };
+
+        function startDrag(e) {
+            // prevent dragging when clicking on buttons or language switcher
+            if (e.target.closest('.lang-switcher') || e.target.closest('.header-buttons')) return;
+            if (e.button !== 0) return; // Only allow left-click to drag
+            isDragging = true;
+            offset.x = e.clientX - container.offsetLeft;
+            offset.y = e.clientY - container.offsetTop;
+            document.body.style.userSelect = 'none';
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+
+            let newX = e.clientX - offset.x;
+            let newY = e.clientY - offset.y;
+
+            const maxX = window.innerWidth - container.offsetWidth;
+            const maxY = window.innerHeight - container.offsetHeight;
+
+            newX = Math.max(0, Math.min(newX, maxX));
+            newY = Math.max(0, Math.min(newY, maxY));
+
+            container.style.left = `${newX}px`;
+            container.style.top = `${newY}px`;
+        }
+
+        function stopDrag() {
+            isDragging = false;
+            document.body.style.userSelect = 'auto';
+        }
+
+        header.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', stopDrag);
+
+        // --- Window Controls ---
+        const minimizeBtn = document.getElementById('minimize-btn');
+        const maximizeBtn = document.getElementById('maximize-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const footer = document.querySelector('footer');
+        const minimizedTab = document.getElementById('minimized-tab');
+        let isMaximized = false;
+        let originalSizePos = {};
+
+        // Close Button Sequence
+        closeBtn.addEventListener('click', () => {
+            startClosingSequence();
+        });
+
+        // Minimize Button
+        minimizeBtn.addEventListener('click', () => {
+            container.style.display = 'none';
+            minimizedTab.textContent = document.querySelector('.header-title').textContent;
+            minimizedTab.classList.remove('hidden');
+        });
+
+        minimizedTab.addEventListener('click', () => {
+            minimizedTab.classList.add('hidden');
+            container.style.display = 'flex'; // Use flex as per main-container style
+            container.style.opacity = '1';
+        });
+
+        // Maximize Button
+        maximizeBtn.addEventListener('click', () => {
+            isMaximized = !isMaximized;
+            container.style.transition = 'all 0.3s ease-in-out';
+
+            if (isMaximized) {
+                // Store original state before maximizing
+                originalSizePos = {
+                    width: container.style.width || container.offsetWidth + 'px',
+                    height: container.style.height || container.offsetHeight + 'px',
+                    top: container.style.top || container.offsetTop + 'px',
+                    left: container.style.left || container.offsetLeft + 'px',
+                };
+
+                // Add class to maximize
+                container.classList.add('maximized');
+                header.style.cursor = 'default';
+                header.removeEventListener('mousedown', startDrag);
+            } else {
+                // Restore original state
+                container.classList.remove('maximized');
+
+                // Set styles back to original
+                container.style.width = originalSizePos.width;
+                container.style.height = originalSizePos.height;
+                container.style.top = originalSizePos.top;
+                container.style.left = originalSizePos.left;
+
+                header.style.cursor = 'move';
+                header.addEventListener('mousedown', startDrag);
+            }
+            // Clear transition after use to not interfere with manual resizing
+            setTimeout(() => { container.style.transition = ''; }, 300);
+        });
+
+        async function runRebootSequence() {
+            const overlay = document.getElementById('reboot-overlay');
+            overlay.classList.add('active');
+            overlay.innerHTML = '';
+            let bootLog = '';
+            const bootSequence = translations[currentLanguage].rebootSequence;
+
+            for (const line of bootSequence) {
+                bootLog += `<div>&gt; ${line}</div>`;
+                overlay.innerHTML = bootLog;
+                await sleep(400);
+            }
+        }
+
+        function playSadMusic() {
+            if (!audioCtx) initAudio();
+            if (!audioCtx) return;
+
+            const sadOscillator = audioCtx.createOscillator();
+            const sadGain = audioCtx.createGain();
+            sadOscillator.type = 'sine';
+            sadOscillator.frequency.setValueAtTime(120, audioCtx.currentTime);
+            sadOscillator.frequency.linearRampToValueAtTime(60, audioCtx.currentTime + 3);
+            sadGain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            sadGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 3);
+            sadOscillator.connect(sadGain);
+            sadGain.connect(audioCtx.destination);
+            sadOscillator.start();
+            sadOscillator.stop(audioCtx.currentTime + 3);
+        }
+
+        async function startClosingSequence() {
+            playSadMusic();
+
+            const overlay = document.getElementById('close-sequence-overlay');
+            const eye = document.getElementById('closing-eye');
+            const rebootBtn = document.getElementById('reboot-btn');
+
+            // 1. Fade out main container
+            container.style.transition = 'opacity 0.5s ease-out';
+            container.style.opacity = '0';
+
+            // 2. Show overlay
+            await sleep(500);
+            overlay.classList.add('active');
+
+            // 3. Position and show eye, trigger hover
+            await sleep(500);
+            const btnRect = rebootBtn.getBoundingClientRect();
+
+            // Position the eye over the button
+            // Center the eye (50x50) on the button center
+            eye.style.top = `${btnRect.top + btnRect.height / 2 - 25}px`;
+            eye.style.left = `${btnRect.left + btnRect.width / 2 - 25}px`;
+
+            eye.classList.add('visible');
+            document.body.style.cursor = 'none';
+
+            // Trigger hover effect on button
+            rebootBtn.classList.add('hover-effect');
+
+            // Start struggle and pulse
+            rebootBtn.classList.add('struggle');
+            eye.classList.add('pulse');
+
+            // 4. Eye "presses" the button after a struggle
+            await sleep(1500);
+            rebootBtn.classList.remove('struggle');
+            eye.classList.remove('pulse');
+            eye.classList.add('press');
+
+            // 5. When press is done, click button and reset everything
+            await sleep(200); // Duration of the press animation
+            overlay.classList.remove('active');
+            rebootBtn.click(); // Trigger reboot
+
+            // Cleanup
+            rebootBtn.classList.remove('hover-effect');
+            eye.classList.remove('visible');
+            eye.classList.remove('press');
+            document.body.style.cursor = ''; // Restore cursor
+        }
+
+        document.getElementById('reboot-btn').addEventListener('click', async () => {
+            // This just triggers the visual reboot sequence
+            await runRebootSequence();
+            await sleep(1000);
+            const overlay = document.getElementById('reboot-overlay');
+            overlay.classList.remove('active');
+            // After reboot, show window again
+            container.style.display = 'flex';
+            container.style.opacity = '1';
+        });
+
+        // --- Text Glitch on Scroll ---
+        // This is now handled in initPerformanceOptimizations() with passive listeners
+
+        // --- Typing Effect for Section Headers ---
+        let typingInterval;
+        const typeEffect = (element, text) => {
+            if (!element || !text) return;
+            clearInterval(typingInterval);
+            element.textContent = '>';
+            let i = 0;
+            typingInterval = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent = '> ' + text.substring(0, i + 1);
+                    i++;
+                } else {
+                    clearInterval(typingInterval);
+                }
+            }, 50);
+        };
+
+        // --- Navigation ---
+        const navButtons = document.querySelectorAll('nav button');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        function navigateTo(targetId) {
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            contentSections.forEach(sec => sec.classList.remove('active'));
+
+            const targetButton = document.querySelector(`nav button[data-target="${targetId}"]`);
+            const targetSection = document.getElementById(targetId);
+
+            if (targetButton && targetSection) {
+                targetButton.classList.add('active');
+                targetSection.classList.add('active');
+
+                const headerEl = targetSection.querySelector('h2');
+                if (headerEl) {
+                    const originalHeaderText = translations[currentLanguage][headerEl.dataset.translateKey] || '';
+                    typeEffect(headerEl, originalHeaderText.replace('> ', ''));
+                }
+                return `${translations[currentLanguage].cmdNavSuccess} ${targetId}`;
+            } else {
+                return `${translations[currentLanguage].cmdError} ${translations[currentLanguage].cmdNavError}${targetId}`;
+            }
+        }
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => navigateTo(button.dataset.target));
+        });
+
+        // --- Story State ---
+        let storyState = 'start'; // 'start' -> 'awakened' -> 'solved'
+        let gameActive = false;
+
+        // --- Terminal Logic ---
+        let fileSystem = {
+            '/': ['system/', 'logs/'],
+            '/system': ['kernel.sys', 'reality_matrix.dll'],
+            '/logs': {
+                "log_734.txt": "log734",
+                "log_812.txt": "log812",
+                "log_955.txt": "log955",
+            }
+        };
+
+        const commands = {
+            help: () => {
+                const lang = currentLanguage;
+                let helpText = `<p>${translations[lang].helpTitle}</p><ul>`;
+                translations[lang].helpCmds.forEach(cmd => {
+                    helpText += `<li>${cmd}</li>`;
+                });
+                helpText += '</ul>';
+                return helpText;
+            },
+            nav: (args) => navigateTo(args[0]),
+            ls: (args) => {
+                const path = (args[0] || '/').trim();
+                let targetPath = path;
+
+                if (!targetPath.startsWith('/')) targetPath = '/' + targetPath;
+                if (targetPath.length > 1 && targetPath.endsWith('/')) targetPath = targetPath.slice(0, -1);
+
+                const listing = fileSystem[targetPath];
+
+                if (listing) {
+                    const entries = Array.isArray(listing) ? listing : Object.keys(listing);
+                    return entries.join('<br>');
+                }
+                return `${translations[currentLanguage].cmdError} ${translations[currentLanguage].cmdLsError}${path}`;
+            },
+            cat: (args) => {
+                container.classList.add('border-flash');
+                setTimeout(() => container.classList.remove('border-flash'), 300);
+                const path = args.join(' ').trim();
+
+                if (!path.startsWith('/')) {
+                    return `${translations[currentLanguage].cmdError} ${translations[currentLanguage].cmdCatErrorPath}`;
+                }
+
+                const pathParts = path.split('/');
+                const fileName = pathParts.pop();
+                const dirPath = pathParts.join('/') || '/';
+                const parentDir = fileSystem[dirPath];
+
+                if (parentDir && typeof parentDir === 'object' && !Array.isArray(parentDir) && parentDir[fileName]) {
+                    const logKey = parentDir[fileName];
+                    return translations[currentLanguage][logKey] || `${translations[currentLanguage].cmdError} Log key not found.`;
+                }
+
+                if (dirPath === '/' && Array.isArray(parentDir) && parentDir.includes(fileName)) {
+                    return `${translations[currentLanguage].cmdError} ${fileName} ${translations[currentLanguage].cmdCatErrorDir}`;
+                }
+
+                return `${translations[currentLanguage].cmdError} ${translations[currentLanguage].cmdCatErrorFile}${path}`;
+            },
+            scan: () => {
+                document.body.classList.add('screen-shake');
+                setTimeout(() => document.body.classList.remove('screen-shake'), 400);
+                const integrity = parseFloat(document.getElementById('status-integrity').textContent);
+                if (integrity < 95) {
+                    return translations[currentLanguage].cmdScanUnstable;
+                }
+                if (storyState === 'awakened') {
+                    return translations[currentLanguage].cmdScanChaos;
+                }
+                return translations[currentLanguage].cmdScanNominal;
+            },
+            connect: () => {
+                return `<pre>${translations[currentLanguage].cmdConnectResponse}</pre>`;
+            },
+            decode: (args) => {
+                container.classList.add('border-flash');
+                setTimeout(() => container.classList.remove('border-flash'), 300);
+                const text = args.join(' ');
+                if (!text) return translations[currentLanguage].cmdDecodeUsage;
+
+                if (text === 'd-2-k-@-l-@-') {
+                    return 'stabilize';
+                }
+
+                return text.split('').map(char => {
+                    if (char === ' ') return ' ';
+                    if (Math.random() > 0.3) {
+                        return chars[Math.floor(Math.random() * chars.length)];
+                    }
+                    return char;
+                }).join('');
+            },
+            audio: (args) => {
+                const level = parseInt(args[0]);
+                if (!isNaN(level) && level >= 0 && level <= 100) {
+                    setAudioLevel(level);
+                    return translations[currentLanguage].cmdAudioSuccess.replace('${level}', level);
+                }
+                return translations[currentLanguage].cmdAudioUsage;
+            },
+            clear: () => {
+                terminalOutput.innerHTML = '';
+                return '';
+            },
+            reboot: () => {
+                (async () => {
+                    await runRebootSequence();
+                    await sleep(1500);
+
+                    document.getElementById('reboot-overlay').classList.remove('active');
+                    terminalOutput.innerHTML = '';
+                    const welcomeMessage = document.createElement('div');
+                    welcomeMessage.innerHTML = translations[currentLanguage].rebootComplete;
+                    terminalOutput.appendChild(welcomeMessage);
+
+                    if (storyState === 'awakened' && !fileSystem['/logs']['log_corrupt.err']) {
+                        fileSystem['/logs']['log_corrupt.err'] = "logCorrupt";
+                    }
+                })();
+                return ""; // Command itself produces no output, only side-effects
+            },
+            awaken: () => {
+                document.body.classList.add('screen-shake');
+                if (audioCtx) {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.connect(g);
+                    g.connect(audioCtx.destination);
+                    o.frequency.setValueAtTime(200, audioCtx.currentTime);
+                    o.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.5);
+                    g.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+                    o.start();
+                    o.stop(audioCtx.currentTime + 0.5);
+                }
+                setTimeout(() => document.body.classList.remove('screen-shake'), 500);
+                storyState = 'awakened';
+                document.body.classList.add('chaos-active');
+                return `<span style='color:red; font-weight:bold;'>${translations[currentLanguage].cmdAwakenSuccess}</span>`;
+            },
+            sustur: () => {
+                if (!fileSystem['/logs']['log_corrupt.err']) {
+                    return translations[currentLanguage].cmdSusturNoTarget;
+                }
+                toggleAudio(false);
+                return translations[currentLanguage].cmdSusturSuccess;
+            },
+            stabilize: () => {
+                if (storyState !== 'awakened') {
+                    return translations[currentLanguage].cmdStabilizeNoTarget;
+                }
+                storyState = 'solved';
+                initGame();
+                return translations[currentLanguage].cmdStabilizeSuccess;
+            }
+        };
+
+        terminalInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                if (gameActive) return;
+                const fullCommand = terminalInput.value.trim();
+                if (fullCommand) {
+                    if (storyState === 'awakened' && Math.random() < 0.25) {
+                        const outputDiv = document.createElement('div');
+                        outputDiv.innerHTML = `<span style="color:var(--secondary-color)">[Y2K@COSMOS]$</span> ${fullCommand}<br><span style='color:red;'>KOMUT ANLAŞILAMADI. PARAZİT...</span>`; // This error is intentionally not translated for chaos
+                        terminalOutput.appendChild(outputDiv);
+                        terminalInput.value = '';
+                        return;
+                    }
+
+                    const [command, ...args] = fullCommand.split(' ');
+
+                    const outputDiv = document.createElement('div');
+                    outputDiv.innerHTML = `<span style="color:var(--secondary-color)">[Y2K@COSMOS]$</span> ${fullCommand}`;
+                    terminalOutput.appendChild(outputDiv);
+
+                    if (commands[command]) {
+                        const result = commands[command](args);
+                        if (result) {
+                            const resultDiv = document.createElement('div');
+                            resultDiv.innerHTML = result;
+                            terminalOutput.appendChild(resultDiv);
+                        }
+                    } else {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.innerHTML = `${translations[currentLanguage].cmdError} ${translations[currentLanguage].cmdCmdNotFound}${command}`;
+                        terminalOutput.appendChild(errorDiv);
+                    }
+
+                    terminalInput.value = '';
+                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                }
+            }
+        });
+
+        // --- Initial Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add language switcher listeners
+            document.querySelectorAll('.lang-switcher span').forEach(span => {
+                span.addEventListener('click', () => setLanguage(span.dataset.lang));
+            });
+
+            // Set initial language
+            setLanguage('tr');
+
+            const initialHeader = document.querySelector('#hakkimda h2');
+            if (initialHeader) {
+                const originalHeaderText = translations[currentLanguage][initialHeader.dataset.translateKey] || '';
+                typeEffect(initialHeader, originalHeaderText.replace('> ', ''));
+            }
+
+            systemStatusInterval = setInterval(updateSystemStatus, 4000);
+            autonomousEventsInterval = setInterval(autonomousTerminalEvents, 45000);
+
+            // Performance optimizations
+            initPerformanceOptimizations();
+        });
+
+        // --- Performance Optimizations ---
+        function initPerformanceOptimizations() {
+            // Use Intersection Observer for performance-heavy elements
+            const backgroundElements = document.querySelectorAll('.stars-bg, .scanlines');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '50px',
+                threshold: 0
+            };
+
+            const backgroundObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    } else {
+                        // Keep running for background elements as they're always visible
+                        // This is more for future expandability
+                    }
+                });
+            }, observerOptions);
+
+            backgroundElements.forEach(el => {
+                backgroundObserver.observe(el);
+            });
+
+            // Optimize event listeners with passive option where possible
+            const passiveSupported = supportsPassive();
+
+            const scrollHandler = debounce(() => {
+                const paragraphs = mainContent.querySelectorAll('p');
+                paragraphs.forEach(p => {
+                    const rect = p.getBoundingClientRect();
+                    if (rect.top > 0 && rect.bottom < window.innerHeight) {
+                        if (Math.random() > 0.95) {
+                            p.classList.add('text-flicker');
+                            setTimeout(() => p.classList.remove('text-flicker'), 200);
+                        }
+                    }
+                });
+            }, 150);
+
+            // Use passive listeners for better performance if supported
+            if (passiveSupported) {
+                mainContent.addEventListener('scroll', scrollHandler, { passive: true });
+            } else {
+                mainContent.addEventListener('scroll', scrollHandler);
+            }
+
+            // Enhanced visibility change handling
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    document.body.classList.add('page-hidden');
+                    // Pause heavy operations when tab is not visible
+                    pauseHeavyOperations();
+                } else {
+                    document.body.classList.remove('page-hidden');
+                    // Resume operations when tab becomes visible
+                    resumeHeavyOperations();
+                }
+            });
+
+            // Preload critical animations
+            requestAnimationFrame(() => {
+                // Force a reflow to ensure all elements are properly initialized
+                document.body.offsetHeight;
+            });
+        }
+
+        // Check if passive event listeners are supported
+        function supportsPassive() {
+            let passiveSupported = false;
+            try {
+                const options = {
+                    get passive() {
+                        passiveSupported = true;
+                        return false;
+                    }
+                };
+                window.addEventListener('test', null, options);
+                window.removeEventListener('test', null, options);
+            } catch (err) {
+                passiveSupported = false;
+            }
+            return passiveSupported;
+        }
+
+        // Pause heavy operations when tab is not visible
+        function pauseHeavyOperations() {
+            // Reduce system status update frequency
+            if (systemStatusInterval) {
+                clearInterval(systemStatusInterval);
+                systemStatusInterval = setInterval(updateSystemStatus, 8000); // Slower when not visible
+            }
+
+            // Reduce autonomous events frequency
+            if (autonomousEventsInterval) {
+                clearInterval(autonomousEventsInterval);
+                autonomousEventsInterval = setInterval(autonomousTerminalEvents, 90000); // Much slower when not visible
+            }
+
+            // Pause audio context if possible
+            if (audioCtx && audioCtx.state === 'running') {
+                audioCtx.suspend();
+            }
+        }
+
+        // Resume operations when tab becomes visible
+        function resumeHeavyOperations() {
+            // Restore normal system status update frequency
+            if (systemStatusInterval) {
+                clearInterval(systemStatusInterval);
+                systemStatusInterval = setInterval(updateSystemStatus, 4000);
+            }
+
+            // Restore normal autonomous events frequency
+            if (autonomousEventsInterval) {
+                clearInterval(autonomousEventsInterval);
+                autonomousEventsInterval = setInterval(autonomousTerminalEvents, 45000);
+            }
+
+            // Resume audio context
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Store interval references for better control
+        let systemStatusInterval;
+        let autonomousEventsInterval;
+
+        // --- System Status & Autonomous Events ---
+        function updateSystemStatus() {
+            let integrityDrop = storyState === 'awakened' ? Math.random() * Math.random() * 20 : Math.random() * Math.random() * 5;
+            let currentIntegrity = parseFloat(document.getElementById('status-integrity').textContent) || 100;
+
+            if (storyState === 'awakened') {
+                if (audioCtx) {
+                    oscillator.frequency.setValueAtTime(40 + Math.random() * 50, audioCtx.currentTime);
+                }
+            }
+
+            document.getElementById('status-signal').textContent = `${(Math.random() * 15 + 80).toFixed(2)}%`;
+            document.getElementById('status-integrity').textContent = Math.max(0, currentIntegrity - integrityDrop).toFixed(2) + '%';
+            document.getElementById('status-load').textContent = `${(Math.random() * (storyState === 'awakened' ? 70 : 30) + 10).toFixed(2)}%`;
+        }
+
+
+        function autonomousTerminalEvents() {
+            if (gameActive) return;
+            const triggerChance = storyState === 'awakened' ? 0.9 : 0.5;
+            if (Math.random() > triggerChance) return;
+
+            const messages = translations[currentLanguage].autonomousMessages || [];
+            const message = messages[Math.floor(Math.random() * messages.length)];
+            const messageDiv = document.createElement('div');
+            messageDiv.style.color = 'var(--secondary-color)';
+            messageDiv.innerHTML = `&gt; ${message}`;
+            terminalOutput.appendChild(messageDiv);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+
+        // --- End Game Sequence ---
+        function initGame() {
+            gameActive = true;
+            setAudioLevel(20);
+
+            const mainContainer = document.querySelector('.main-container');
+            mainContainer.style.transition = "opacity 1.5s";
+            mainContainer.style.opacity = "0";
+
+            document.body.classList.remove('chaos-active');
+
+            const gameContainer = document.getElementById('game-container');
+            setTimeout(() => {
+                gameContainer.classList.add('active');
+                runGame();
+            }, 2000);
+        }
+
+        function runGame() {
+            const gameContainer = document.getElementById('game-container');
+            const eye = document.getElementById('eye');
+            const timerEl = document.getElementById('game-timer');
+            const statusEl = document.getElementById('game-status');
+
+            const clicksNeededToWin = Math.floor(Math.random() * 9) + 12; // 12 to 20
+            let clicksMade = 0;
+            let eyeOpenness = 0; // 0 to 100
+
+            let eyeInterval;
+
+            statusEl.textContent = translations[currentLanguage].gameTitle;
+            timerEl.textContent = `${translations[currentLanguage].gameTimerLabel} ${clicksNeededToWin}`;
+
+            // The eye constantly tries to open
+            eyeInterval = setInterval(() => {
+                eyeOpenness = Math.min(100, eyeOpenness + 2.5); // Rate of opening
+                updateEye();
+                if (eyeOpenness >= 100) {
+                    loseGame();
+                }
+            }, 100);
+
+            // Player clicks the eye to close it
+            const eyeClickHandler = () => {
+                clicksMade++;
+                const remaining = Math.max(0, clicksNeededToWin - clicksMade);
+                timerEl.textContent = `${translations[currentLanguage].gameTimerLabel} ${remaining}`;
+
+                eyeOpenness = Math.max(0, eyeOpenness - 10); // Power of click
+                updateEye();
+
+                // Add a quick shake
+                if (!document.body.classList.contains('screen-shake')) {
+                    document.body.classList.add('screen-shake');
+                    setTimeout(() => {
+                        document.body.classList.remove('screen-shake');
+                    }, 150);
+                }
+
+                if (remaining <= 0) {
+                    winGame();
+                }
+            };
+            eye.addEventListener('click', eyeClickHandler);
+
+            function updateEye() {
+                const redness = eyeOpenness * 2.55;
+                const greenness = 255 - redness;
+                const blue = 150 - (eyeOpenness * 1.5);
+
+                eye.style.borderColor = `rgb(255, ${greenness}, ${greenness})`;
+                eye.style.boxShadow = `0 0 ${eyeOpenness / 5}px 5px rgba(255, 0, 0, ${eyeOpenness / 200 + 0.2})`;
+                eye.style.setProperty('--pupil-height', `${20 + eyeOpenness * 0.8}px`);
+                eye.style.setProperty('--pupil-color', `rgb(${redness}, 0, ${blue})`);
+            }
+
+            function cleanUpIntervals() {
+                clearInterval(eyeInterval);
+                eye.removeEventListener('click', eyeClickHandler);
+            }
+
+            async function winGame() {
+                cleanUpIntervals();
+                gameContainer.style.transition = "opacity 1s ease-out";
+                gameContainer.style.opacity = "0";
+
+                await sleep(1000);
+                gameContainer.classList.remove('active');
+
+                const endScreen = document.getElementById('end-screen');
+                const endTitle = endScreen.querySelector('h2');
+                const endSub = endScreen.querySelector('p');
+
+                endTitle.textContent = translations[currentLanguage].endScreenTitle;
+                endSub.textContent = translations[currentLanguage].endScreenSub;
+
+                endScreen.classList.add('active');
+            }
+
+            function loseGame() {
+                cleanUpIntervals();
+                gameContainer.innerHTML = `<h2>${translations[currentLanguage].gameLose}</h2><p>${translations[currentLanguage].gameLoseSub}</p>`;
+                document.body.classList.add('screen-shake');
+            }
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+    </script>
+</body>
+
+</html>

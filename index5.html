@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İsminiz :: PORTAL v3.1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <style>
+        /* ======================================================
+        === ULTIMATE Y2K AESTHETIC STYLESHEET v3.1 (STABLE) ===
+        ======================================================
+        */
+
+        :root {
+            --primary-color: #00ff00;
+            /* Matrix Green */
+            --secondary-color: #ff00ff;
+            /* Magenta */
+            --accent-color: #00ffff;
+            /* Cyan */
+            --background-color: #0d0d0d;
+            --window-bg-color: rgba(10, 25, 10, 0.8);
+            --border-color: #008000;
+            /* Dark Green */
+            --text-color: #ccffcc;
+            --glow-color-1: rgba(0, 255, 0, 0.7);
+            --glow-color-2: rgba(255, 0, 255, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: crosshair;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'VT323', monospace;
+            font-size: 22px;
+            line-height: 1.6;
+            overflow: hidden;
+            text-shadow: 0 0 7px var(--glow-color-1);
+        }
+
+        #matrix-canvas,
+        #trail-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        #matrix-canvas {
+            opacity: 0.6;
+        }
+
+        .crt-effect::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0, rgba(0, 0, 0, 0.5) 1px, transparent 2px),
+                radial-gradient(ellipse at center, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 80%);
+            pointer-events: none;
+            z-index: 9999;
+            animation: flicker 0.15s infinite;
+        }
+
+        @keyframes flicker {
+            0% {
+                opacity: 0.9;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.9;
+            }
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 15px var(--glow-color-1);
+            padding: 10px;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 24px;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--glow-color-1);
+            cursor: not-allowed;
+        }
+
+        .glitch {
+            animation: glitch-anim 1.5s infinite;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                transform: translate(0)
+            }
+
+            20% {
+                transform: translate(-3px, 3px)
+            }
+
+            40% {
+                transform: translate(-3px, -3px)
+            }
+
+            60% {
+                transform: translate(3px, 3px)
+            }
+
+            80% {
+                transform: translate(3px, -3px)
+            }
+
+            100% {
+                transform: translate(0)
+            }
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 22px;
+            padding: 5px 10px;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 8px var(--glow-color-2);
+            cursor: help;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background-color: var(--secondary-color);
+            color: var(--background-color);
+            box-shadow: 0 0 15px var(--glow-color-2);
+            text-shadow: none;
+        }
+
+        .window {
+            position: absolute;
+            background: var(--window-bg-color);
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 20px var(--glow-color-1), inset 0 0 15px rgba(0, 255, 0, 0.1);
+            backdrop-filter: blur(5px);
+            min-width: 275px;
+            display: none;
+            resize: both;
+            overflow: hidden;
+        }
+
+        .window.active {
+            display: block;
+            z-index: 100;
+        }
+
+        .title-bar {
+            background: var(--primary-color);
+            padding: 5px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+        }
+
+        .title-bar h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            color: var(--background-color);
+            text-shadow: none;
+            white-space: nowrap;
+        }
+
+        .title-bar-buttons button {
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--background-color);
+            background: var(--primary-color);
+            color: var(--background-color);
+            font-family: 'VT323', monospace;
+            margin-left: 5px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .title-bar-buttons button:hover {
+            background: var(--secondary-color);
+        }
+
+        .window-content {
+            padding: 20px;
+            height: calc(100% - 34px);
+            overflow-y: auto;
+            cursor: text;
+        }
+
+        .window-content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .window-content::-webkit-scrollbar-track {
+            background: var(--background-color);
+        }
+
+        .window-content::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .hero h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2em;
+            color: var(--secondary-color);
+        }
+
+        .blinking-cursor {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+
+            from,
+            to {
+                color: transparent;
+            }
+
+            50% {
+                color: var(--secondary-color);
+            }
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            border: 2px solid var(--secondary-color);
+            background: rgba(255, 0, 255, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: grab;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px var(--glow-color-2);
+        }
+
+        .project-card h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            padding: 10px;
+            background: var(--secondary-color);
+            color: var(--background-color);
+            text-shadow: none;
+        }
+
+        .project-card p {
+            padding: 15px;
+            flex-grow: 1;
+        }
+
+        .project-links {
+            padding: 10px 15px;
+            border-top: 1px dashed var(--secondary-color);
+        }
+
+        .project-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-right: 15px;
+            cursor: copy;
+        }
+
+        .skills-list ul {
+            list-style: none;
+        }
+
+        .skills-list li {
+            margin-bottom: 15px;
+        }
+
+        .skill-bar {
+            width: 100%;
+            height: 20px;
+            background: #222;
+            border: 1px solid var(--primary-color);
+            margin-top: 5px;
+        }
+
+        .skill-level {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .contact-links {
+            list-style: none;
+            text-align: center;
+        }
+
+        .contact-links li {
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .contact-links a {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 10px 15px;
+            border: 2px solid var(--secondary-color);
+            transition: all 0.3s ease;
+            cursor: alias;
+        }
+
+        .contact-links a:hover {
+            background: var(--secondary-color);
+            color: var(--background-color);
+            text-shadow: none;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border-top: 1px solid var(--primary-color);
+            padding: 5px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            z-index: 1000;
+            cursor: progress;
+        }
+
+        footer img {
+            height: 25px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        /* --- Winamp Player --- */
+        #winamp-player {
+            width: 275px;
+            height: 140px;
+            background: #212121;
+            border: 2px solid #5a5a5a;
+            font-family: 'VT323', monospace;
+            color: var(--primary-color);
+        }
+
+        #winamp-player .title-bar {
+            background: #000084;
+            cursor: move;
+        }
+
+        #winamp-player .title-bar h2 {
+            font-size: 12px;
+            color: #fff;
+        }
+
+        .winamp-body {
+            padding: 5px;
+        }
+
+        .song-title {
+            background: #000;
+            padding: 2px 5px;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .winamp-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .winamp-controls button {
+            background: #c6c6c6;
+            border: 1px solid #848484;
+            border-top-color: #fff;
+            border-left-color: #fff;
+            margin: 0 2px;
+            padding: 2px 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #volume-slider {
+            width: 80%;
+            margin: 5px auto;
+            display: block;
+            -webkit-appearance: none;
+            background: #000;
+            border: 1px solid var(--primary-color);
+            height: 10px;
+            cursor: ew-resize;
+        }
+
+        #volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 10px;
+            height: 20px;
+            background: var(--secondary-color);
+            cursor: pointer;
+            border: 1px solid var(--primary-color);
+        }
+
+        .volume-display {
+            text-align: center;
+            font-size: 12px;
+            color: var(--primary-color);
+            background: #000;
+            padding: 2px;
+            margin-top: 2px;
+            border: 1px solid var(--primary-color);
+        }
+
+        /* --- Co-Pilot Assistant --- */
+        #copilot-assistant {
+            position: fixed;
+            bottom: 50px;
+            right: 20px;
+            z-index: 2000;
+        }
+
+        .copilot-char {
+            font-size: 14px;
+            line-height: 1;
+            white-space: pre;
+            color: var(--accent-color);
+            text-shadow: 0 0 5px var(--accent-color);
+            cursor: cell;
+        }
+
+        .copilot-bubble {
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            background: var(--window-bg-color);
+            border: 1px solid var(--accent-color);
+            padding: 10px;
+            width: 200px;
+            font-size: 18px;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body class="crt-effect">
+    <canvas id="matrix-canvas"></canvas>
+    <canvas id="trail-canvas"></canvas>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo" id="logo">&lt;C_PORTAL /&gt;</div>
+            <ul class="nav-links">
+                <li><a href="#" data-window="window-hakkimda" class="active">README.md</a></li>
+                <li><a href="#" data-window="window-projeler">PROJELER</a></li>
+                <li><a href="#" data-window="window-yetenekler">YETENEKLER</a></li>
+                <li><a href="#" data-window="window-iletisim">BAĞLANTI</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Pencereler -->
+        <div id="window-hakkimda" class="window active" style="top: 15%; left: 10%; width: 450px; height: 300px;">
+            <div class="title-bar">
+                <h2>README.md</h2>
+                <div class="title-bar-buttons"><button class="close-btn">X</button></div>
+            </div>
+            <div class="window-content hero">
+                <h1 id="typing-text"></h1>
+                <p class="subtitle">&gt; Dijital Hayalet<span class="blinking-cursor">_</span></p>
+                <p>Sinyale hoş geldin. Ben Ercüment Berke Arastaman. Kod ve piksellerden oluşan bu evrende, fikirleri
+                    gerçeğe
+                    dönüştüren bir mimarım.</p>
+            </div>
+        </div>
+
+        <div id="window-projeler" class="window" style="top: 20%; left: 45%; width: 500px; height: 450px;">
+            <div class="title-bar">
+                <h2>C:\PROJELER\*.EXE</h2>
+                <div class="title-bar-buttons"><button class="close-btn">X</button></div>
+            </div>
+            <div class="window-content">
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3>Proje: CyberShop</h3>
+                        <p>Retro-fütüristik temalı, tamamen duyarlı bir e-ticaret sitesi arayüzü.</p>
+                        <div class="project-links"><a href="#" target="_blank">Canlı Demo &gt;</a><a href="#"
+                                target="_blank">GitHub &gt;</a></div>
+                    </div>
+                    <div class="project-card">
+                        <h3>Proje: Görev Matrisi</h3>
+                        <p>Kullanıcıların görevlerini yönetebileceği bir "To-Do" uygulaması.</p>
+                        <div class="project-links"><a href="#" target="_blank">Canlı Demo &gt;</a><a href="#"
+                                target="_blank">GitHub &gt;</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="window-yetenekler" class="window" style="top: 55%; left: 5%; width: 400px; height: 300px;">
+            <div class="title-bar">
+                <h2>SYS_CONF/SKILLS.DAT</h2>
+                <div class="title-bar-buttons"><button class="close-btn">X</button></div>
+            </div>
+            <div class="window-content skills-list">
+                <ul>
+                    <li>
+                        <p>// Frontend</p>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 90%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <p>// Backend (Node.js, Python)</p>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 75%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <p>// Veritabanı (SQL, NoSQL)</p>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 80%;"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <p>// UI/UX Tasarım İlkeleri</p>
+                        <div class="skill-bar">
+                            <div class="skill-level" style="width: 85%;"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="window-iletisim" class="window" style="top: 65%; left: 40%; width: 350px; height: 220px;">
+            <div class="title-bar">
+                <h2>NET/CONNECT.EXE</h2>
+                <div class="title-bar-buttons"><button class="close-btn">X</button></div>
+            </div>
+            <div class="window-content" style="text-align:center;">
+                <img src="https://placehold.co/60x50/0d0d0d/00ffff?text=MAIL" alt="Email GIF"
+                    style="margin-bottom: 15px;">
+                <p>Sinyali takip et:</p>
+                <ul class="contact-links">
+                    <li><a href="#" target="_blank">GitHub</a></li>
+                    <li><a href="#" target="_blank">LinkedIn</a></li>
+                    <li><a href="#" target="_blank">Twitter/X</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Winamp Player -->
+        <div id="winamp-player" class="window active" style="top: 80px; right: 20px;">
+            <div class="title-bar">
+                <h2>WINAMP v2.91</h2>
+                <div class="title-bar-buttons"><button class="close-btn">X</button></div>
+            </div>
+            <div class="winamp-body">
+                <div class="song-title">1. Chiptune - Cyber-Odyssey.mid</div>
+                <div class="winamp-controls">
+                    <button id="play-btn">▶ OYNAT</button>
+                    <button id="pause-btn"></button>
+                </div>
+                <input type="range" id="volume-slider" min="0" max="100" value="70">
+                <div class="volume-display" id="volume-display">SES: 70%</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Co-Pilot Assistant -->
+    <div id="copilot-assistant">
+        <div class="copilot-bubble" id="copilot-bubble">Görünüşe göre bir web sitesi yapmaya çalışıyorsun. Yardım ister
+            misin?</div>
+        <pre id="copilot-char" class="copilot-char">
+ (•_•)
+ ( •_•)>⌐■-■
+ (⌐■_■)
+        </pre>
+    </div>
+
+    <footer>
+        <div>&copy; 2025 Ercüment Berke Arastaman :: SYSTEM STATUS: <span
+                style="color: var(--primary-color);">ONLINE</span></div>
+        <div><img src="https://placehold.co/88x31/0d0d0d/00ff00?text=Made+for+IE5" alt="IE5 Uyumlu"><img
+                src="https://placehold.co/88x31/0d0d0d/ff00ff?text=800x600" alt="800x600 Çözünürlük"></div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            let audioStarted = false;
+            let synth, masterVolume;
+
+            // Ses sistemini ilk tıklamada başlat
+            const initAudio = async () => {
+                if (audioStarted) return;
+
+                try {
+                    await Tone.start();
+                    console.log('Tone.js başlatıldı');
+
+                    // Master volume oluştur - tüm sesler buraya bağlanacak
+                    masterVolume = new Tone.Volume(-15).toDestination();
+
+                    // Click sesleri için synth - master volume'a bağla
+                    synth = new Tone.Synth().connect(masterVolume);
+
+                    // Başlangıç volume ayarla
+                    setTimeout(() => {
+                        setVolume();
+                    }, 100);
+
+                    audioStarted = true;
+                    console.log('Ses sistemi tamamen hazır');
+                } catch (e) {
+                    console.error('Ses sistemi başlatma hatası:', e);
+                }
+            };
+
+            const clickSound = async () => {
+                await initAudio();
+                try {
+                    if (synth) {
+                        // Rastgele ton seç ve kısa ses çıkar
+                        const notes = ["C5", "D5", "E5", "F5", "G5"];
+                        const randomNote = notes[Math.floor(Math.random() * notes.length)];
+                        synth.triggerAttackRelease(randomNote, "32n");
+                    }
+                } catch (e) {
+                    console.log('Click ses hatası:', e);
+                }
+            };
+
+            // Winamp Müzik Çalar - Tone.js ile
+            let isPlaying = false;
+            let musicSynth = null;
+            let musicLoop = null;
+
+            const createMusic = async () => {
+                try {
+                    await initAudio();
+
+                    if (musicSynth) {
+                        console.log('Müzik zaten var, çıkıyor...');
+                        return;
+                    }
+
+                    // Yeni synthesizer oluştur
+                    musicSynth = new Tone.Synth({
+                        oscillator: {
+                            type: "square"
+                        },
+                        envelope: {
+                            attack: 0.1,
+                            decay: 0.3,
+                            sustain: 0.3,
+                            release: 0.8
+                        }
+                    }).connect(masterVolume);
+
+                    // Basit melodi
+                    const melody = ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"];
+                    let noteIndex = 0;
+
+                    musicLoop = new Tone.Loop((time) => {
+                        if (isPlaying && musicSynth) {
+                            musicSynth.triggerAttackRelease(melody[noteIndex], "8n", time);
+                            noteIndex = (noteIndex + 1) % melody.length;
+                        }
+                    }, "4n");
+
+                    console.log('Müzik sistemi hazırlandı');
+                } catch (e) {
+                    console.error('Müzik yaratma hatası:', e);
+                }
+            };
+
+            const startMusic = async () => {
+                try {
+                    await createMusic();
+                    if (musicLoop && !isPlaying) {
+                        isPlaying = true;
+                        musicLoop.start();
+                        Tone.Transport.start();
+                        console.log('Müzik başlatıldı');
+                        document.getElementById('play-btn').innerHTML = '⏸ DURDUR';
+                    }
+                } catch (e) {
+                    console.error('Müzik başlatma hatası:', e);
+                }
+            };
+
+            const stopMusic = () => {
+                try {
+                    if (musicLoop && isPlaying) {
+                        isPlaying = false;
+                        musicLoop.stop();
+                        Tone.Transport.stop();
+                        console.log('Müzik durduruldu');
+                        document.getElementById('play-btn').innerHTML = '▶ OYNAT';
+                    }
+                } catch (e) {
+                    console.error('Müzik durdurma hatası:', e);
+                }
+            };
+
+            const setVolume = () => {
+                const volumeSlider = document.getElementById('volume-slider');
+                const volumeDisplay = document.getElementById('volume-display');
+
+                if (masterVolume && volumeSlider) {
+                    // 0-100 slider değerini -40 to 0 dB'ye çevir
+                    const sliderValue = parseInt(volumeSlider.value);
+                    let volume;
+
+                    if (sliderValue === 0) {
+                        volume = -Infinity; // Tamamen sessiz
+                        volumeDisplay.textContent = 'SESSIZ';
+                    } else {
+                        volume = (sliderValue / 100) * 40 - 40; // -40 to 0 dB
+                        volumeDisplay.textContent = `SES: ${sliderValue}%`;
+                    }
+
+                    masterVolume.volume.value = volume;
+                    console.log(`Volume ayarlandı - Slider: ${sliderValue}%, dB: ${volume}`);
+                }
+            };
+
+            // Event listeners
+            document.getElementById('play-btn').onclick = async () => {
+                console.log('Play butonu tıklandı, isPlaying:', isPlaying);
+                if (!isPlaying) {
+                    await startMusic();
+                } else {
+                    stopMusic();
+                }
+            };
+
+            document.getElementById('pause-btn').onclick = () => {
+                console.log('Pause butonu tıklandı');
+                stopMusic();
+            };
+
+            // Volume slider event listeners - hem input hem change
+            const volumeSlider = document.getElementById('volume-slider');
+            volumeSlider.addEventListener('input', setVolume);
+            volumeSlider.addEventListener('change', setVolume);
+
+            // İlk tıklamada ses sistemini başlat ve volume ayarla
+            document.addEventListener('click', async () => {
+                await initAudio();
+                // Ses sistemi hazır olduktan sonra volume'u ayarla
+                setTimeout(setVolume, 200);
+            }, { once: true });
+
+            // Click sesleri için event listener ekle
+            document.querySelectorAll('a, button').forEach(el => {
+                el.addEventListener('click', clickSound);
+            });
+
+            // --- Matrix & İmleç Efektleri ---
+            const matrixCanvas = document.getElementById('matrix-canvas');
+            const trailCanvas = document.getElementById('trail-canvas');
+            const m_ctx = matrixCanvas.getContext('2d');
+            const t_ctx = trailCanvas.getContext('2d');
+            const setupCanvases = () => {
+                matrixCanvas.width = trailCanvas.width = window.innerWidth;
+                matrixCanvas.height = trailCanvas.height = window.innerHeight;
+            };
+            setupCanvases();
+            window.addEventListener('resize', setupCanvases);
+
+            const alphabet = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン01';
+            const fontSize = 16;
+            const columns = () => matrixCanvas.width / fontSize;
+            let rainDrops = Array.from({ length: Math.ceil(columns()) }).fill(1);
+            const drawMatrix = () => {
+                m_ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                m_ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+                m_ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
+                m_ctx.font = fontSize + 'px monospace';
+                rainDrops.forEach((y, ind) => {
+                    const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                    m_ctx.fillText(text, ind * fontSize, y * fontSize);
+                    if (y * fontSize > matrixCanvas.height && Math.random() > 0.975) rainDrops[ind] = 0;
+                    else rainDrops[ind] = y + 1;
+                });
+            };
+            setInterval(drawMatrix, 40);
+
+            let particles = [];
+            window.addEventListener('mousemove', e => particles.push({ x: e.clientX, y: e.clientY, life: 20 }));
+            const drawTrail = () => {
+                t_ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+                particles.forEach((p, i) => {
+                    p.life--;
+                    if (p.life <= 0) particles.splice(i, 1);
+                    t_ctx.fillStyle = `rgba(0, 255, 255, ${p.life / 20})`;
+                    t_ctx.beginPath(); t_ctx.arc(p.x, p.y, 3, 0, Math.PI * 2); t_ctx.fill();
+                });
+                requestAnimationFrame(drawTrail);
+            };
+            drawTrail();
+
+            // --- Yazı Yazma Efekti ---
+            const textToType = "BAĞLANTI KURULDU...";
+            const typingElement = document.getElementById('typing-text');
+            let i = 0;
+            function typeWriter() {
+                if (i < textToType.length) {
+                    typingElement.innerHTML += textToType.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 120);
+                }
+            }
+            typeWriter();
+
+            // --- Co-Pilot Asistanı ---
+            const copilotBubble = document.getElementById('copilot-bubble');
+            const tips = ["Pencereleri sürükleyebilirsin!", "Matrix harika değil mi?", "Müziği durdurabilirsin.", "SYSTEM_FAILURE_IMMINENT...", "Kahve zamanı!"];
+            setInterval(() => copilotBubble.innerText = tips[Math.floor(Math.random() * tips.length)], 8000);
+
+            // --- Pencere Yönetimi ---
+            const windows = document.querySelectorAll('.window');
+            const navLinks = document.querySelectorAll('.nav-links a');
+
+            // Z-index yönetimi için
+            let maxZIndex = 100;
+            windows.forEach(w => w.style.zIndex = '10');
+
+            const bringToFront = (el) => {
+                maxZIndex++;
+                el.style.zIndex = maxZIndex;
+            };
+
+            // Navigasyon linkleri
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const windowId = link.getAttribute('data-window');
+                    const targetWindow = document.getElementById(windowId);
+
+                    console.log('Tıklanan link:', windowId); // Debug için
+                    console.log('Hedef pencere:', targetWindow); // Debug için
+
+                    if (targetWindow) {
+                        // Önce tüm content pencerelerini gizle (winamp hariç)
+                        document.querySelectorAll('.window').forEach(win => {
+                            if (win.id !== 'winamp-player') {
+                                win.classList.remove('active');
+                                win.style.display = 'none';
+                            }
+                        });
+
+                        // Tüm linklerden active class'ını kaldır
+                        navLinks.forEach(l => l.classList.remove('active'));
+
+                        // Hedef pencereyi göster
+                        targetWindow.style.display = 'block';
+                        targetWindow.classList.add('active');
+                        bringToFront(targetWindow);
+                        link.classList.add('active');
+
+                        console.log('Pencere açıldı:', windowId);
+                    } else {
+                        console.error('Pencere bulunamadı:', windowId);
+                    }
+                });
+            });
+
+            // Pencere kapatma
+            document.querySelectorAll('.close-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Event bubbling'i durdur
+                    const windowEl = e.target.closest('.window');
+                    console.log('Kapatma butonu tıklandı:', windowEl ? windowEl.id : 'pencere bulunamadı');
+
+                    if (windowEl && windowEl.id !== 'winamp-player') {
+                        windowEl.style.display = 'none';
+                        windowEl.classList.remove('active');
+                        const windowId = windowEl.id;
+                        const navLink = document.querySelector(`.nav-links a[data-window="${windowId}"]`);
+                        if (navLink) navLink.classList.remove('active');
+                    }
+                });
+            });
+
+            // Sürükleme Fonksiyonu
+            let activeWindow = null;
+            let offsetX, offsetY;
+
+            function dragStart(e) {
+                // Close butonuna tıklanmışsa sürükleme başlatma
+                if (e.target.classList.contains('close-btn')) {
+                    return;
+                }
+
+                e.preventDefault();
+                activeWindow = this.closest('.window');
+                if (!activeWindow) return;
+
+                bringToFront(activeWindow);
+                console.log('Sürükleme başladı:', activeWindow.id);
+
+                const rect = activeWindow.getBoundingClientRect();
+                const event = e.type === 'mousedown' ? e : e.touches[0];
+                offsetX = event.clientX - rect.left;
+                offsetY = event.clientY - rect.top;
+
+                document.addEventListener('mousemove', dragMove);
+                document.addEventListener('mouseup', dragEnd);
+                document.addEventListener('touchmove', dragMove, { passive: false });
+                document.addEventListener('touchend', dragEnd);
+            }
+
+            function dragMove(e) {
+                if (!activeWindow) return;
+                e.preventDefault();
+
+                const event = e.type === 'mousemove' ? e : e.touches[0];
+                const newX = event.clientX - offsetX;
+                const newY = event.clientY - offsetY;
+
+                // Ekran sınırları içinde tut
+                const maxX = window.innerWidth - activeWindow.offsetWidth;
+                const maxY = window.innerHeight - activeWindow.offsetHeight;
+
+                activeWindow.style.left = Math.max(0, Math.min(newX, maxX)) + 'px';
+                activeWindow.style.top = Math.max(0, Math.min(newY, maxY)) + 'px';
+            }
+
+            function dragEnd() {
+                if (activeWindow) {
+                    console.log('Sürükleme bitti:', activeWindow.id);
+                }
+                activeWindow = null;
+                document.removeEventListener('mousemove', dragMove);
+                document.removeEventListener('mouseup', dragEnd);
+                document.removeEventListener('touchmove', dragMove);
+                document.removeEventListener('touchend', dragEnd);
+            }
+
+            // Tüm title-bar'lara sürükleme özelliği ekle
+            document.querySelectorAll('.title-bar').forEach(bar => {
+                bar.addEventListener('mousedown', dragStart);
+                bar.addEventListener('touchstart', dragStart);
+                console.log('Sürükleme event listener eklendi:', bar.closest('.window').id);
+            });
+        });
+    </script>
+</body>
+
+</html>

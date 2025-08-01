@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>:: SYSTEM v2.1 ::</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Share Tech Mono', monospace
+        }
+
+        body {
+            background: #000033;
+            overflow: hidden;
+            cursor: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBmaWxsPSIjRkYwMEZGIi8+Cjwvc3ZnPgo='), auto
+        }
+
+        #boot-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000033 0%, #330066 50%, #000033 100%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: bootGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes bootGlow {
+
+            0%,
+            100% {
+                box-shadow: inset 0 0 100px rgba(0, 255, 255, .1)
+            }
+
+            50% {
+                box-shadow: inset 0 0 200px rgba(255, 0, 255, .2)
+            }
+        }
+
+        .boot-logo {
+            width: 250px;
+            height: 250px;
+            background: conic-gradient(from 0deg, #ff00ff, #00ffff, #ff00ff, #00ffff, #ff00ff);
+            border-radius: 50%;
+            position: relative;
+            animation: spin 4s linear infinite;
+            box-shadow: 0 0 50px #ff00ff, inset 0 0 50px rgba(255, 255, 255, .3);
+        }
+
+        .boot-logo::before {
+            content: "Borkew";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', monospace;
+            font-size: 48px;
+            font-weight: 900;
+            color: #000033;
+            text-shadow: 0 0 20px #00ffff;
+            letter-spacing: 4px;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg)
+            }
+
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .boot-text {
+            color: #00ffff;
+            font-size: 20px;
+            margin: 30px 0;
+            text-align: center
+        }
+
+        .progress-bar {
+            width: 400px;
+            height: 25px;
+            border: 3px ridge #00ffff;
+            background: #000033;
+            overflow: hidden
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff00ff 0%, #00ffff 50%, #ff00ff 100%);
+            animation: progress 6s linear forwards, glitch 2s linear infinite
+        }
+
+        @keyframes progress {
+            to {
+                width: 100%
+            }
+        }
+
+        @keyframes glitch {
+            0% {
+                filter: hue-rotate(0deg)
+            }
+
+            100% {
+                filter: hue-rotate(360deg)
+            }
+        }
+
+        #desktop {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #000033 0%, #330066 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .desktop-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 20%, rgba(255, 0, 255, .3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 255, .3) 0%, transparent 50%);
+            animation: bgPulse 10s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+
+            0%,
+            100% {
+                opacity: .5
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+
+        .taskbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 45px;
+            background: linear-gradient(180deg, #330066 0%, #000033 100%);
+            border-top: 3px ridge #00ffff;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            box-shadow: 0 -5px 20px rgba(0, 255, 255, .3);
+            z-index: 1000;
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #ff00ff 0%, #660066 50%, #ff00ff 100%);
+            border: 3px outset #00ffff;
+            color: #00ffff;
+            padding: 8px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all .3s;
+            text-shadow: 0 0 5px #00ffff;
+            box-shadow: 0 0 10px rgba(255, 0, 255, .5)
+        }
+
+        .start-button:active {
+            border-style: inset;
+            transform: translate(1px, 1px)
+        }
+
+        .start-menu {
+            position: absolute;
+            bottom: 45px;
+            left: 0;
+            width: 250px;
+            background: linear-gradient(135deg, #330066 0%, #000033 100%);
+            border: 3px ridge #00ffff;
+            border-bottom: none;
+            display: none;
+            box-shadow: 0 -5px 20px rgba(0, 255, 255, .5)
+        }
+
+        .start-item {
+            padding: 10px 20px;
+            color: #00ffff;
+            cursor: pointer;
+            border-bottom: 1px solid #660066;
+            transition: all .3s;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .start-item:hover {
+            background: rgba(255, 0, 255, .3);
+            padding-left: 30px
+        }
+
+        .desktop-icons {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 10
+        }
+
+        .desktop-icon {
+            width: 90px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .3s
+        }
+
+        .desktop-icon:hover {
+            transform: scale(1.1);
+            filter: brightness(1.5)
+        }
+
+        .icon-image {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #00ffff 0%, #ff00ff 100%);
+            margin: 0 auto 5px;
+            border: 3px outset #00ffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #000033;
+            box-shadow: 0 0 15px rgba(0, 255, 255, .5), inset 0 0 10px rgba(255, 255, 255, .3)
+        }
+
+        .icon-label {
+            color: #00ffff;
+            font-size: 14px;
+            font-weight: bold;
+            text-shadow: 0 0 5px #000
+        }
+
+        .window {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 500px;
+            background: linear-gradient(135deg, #330066 0%, #000033 100%);
+            border: 3px ridge #00ffff;
+            box-shadow: 0 0 30px rgba(0, 255, 255, .5);
+            display: none;
+            z-index: 100
+        }
+
+        .window-header {
+            background: linear-gradient(90deg, #ff00ff 0%, #00ffff 50%, #ff00ff 100%);
+            padding: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #000033;
+            text-shadow: 0 0 5px #fff
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 3px
+        }
+
+        .window-button {
+            width: 25px;
+            height: 25px;
+            background: #000033;
+            color: #00ffff;
+            border: 2px outset #00ffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold
+        }
+
+        .window-content {
+            padding: 20px;
+            height: calc(100% - 45px);
+            overflow-y: auto;
+            color: #00ff00;
+            font-size: 16px
+        }
+
+        .warning-bar {
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            color: #000033;
+            padding: 5px;
+            text-align: center;
+            font-weight: bold;
+            animation: blink .5s infinite
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1
+            }
+
+            51%,
+            100% {
+                opacity: .5
+            }
+        }
+
+        .project-card-y2k {
+            background: linear-gradient(135deg, #330066 0%, #000033 100%);
+            border: 3px ridge #00ffff;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 0 15px rgba(255, 0, 255, .3)
+        }
+
+        .skill-bar {
+            background: #000033;
+            border: 2px ridge #00ffff;
+            height: 25px;
+            margin: 5px 0;
+            overflow: hidden
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff00ff 0%, #00ffff 100%)
+        }
+
+        .contact-links-y2k {
+            display: flex;
+            flex-direction: column;
+            gap: 10px
+        }
+
+        .contact-link-y2k {
+            background: linear-gradient(135deg, #660066 0%, #330066 100%);
+            border: 3px ridge #00ffff;
+            padding: 15px;
+            color: #00ff00;
+            text-decoration: none;
+            text-align: center;
+            transition: all .3s;
+            font-weight: bold
+        }
+
+        .contact-link-y2k:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 255, 255, .5)
+        }
+
+        .start-menu-divider {
+            background: #ff00ff;
+            height: 2px;
+            margin: 5px 0
+        }
+    </style>
+</head>
+
+<body>
+    <div id="boot-screen">
+        <div class="boot-logo"></div>
+        <div class="boot-text">
+            <div class="loading-text">Borkew FUTURISTIC OS v2.1</div>
+            <div style="margin:10px 0;color:#ffff00;font-size:16px">Loading System...</div>
+            <div style="color:#ff00ff;font-size:14px">█▓▒░ Cyber Matrix Protocol ░▒▓█</div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div style="margin-top:20px;color:#00ffff;font-size:12px">
+            <div>>> Initializing Neural Network...</div>
+            <div>>> Loading Holographic Interface...</div>
+            <div>>> Decrypting Reality... 100%</div>
+        </div>
+    </div>
+
+    <div id="desktop">
+        <div class="desktop-bg"></div>
+
+        <div class="desktop-icons">
+            <div class="desktop-icon" onclick="openWindow('about')">
+                <div class="icon-image">👤</div>
+                <div class="icon-label">About.exe</div>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('projects')">
+                <div class="icon-image">📁</div>
+                <div class="icon-label">Projects.sys</div>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('skills')">
+                <div class="icon-image">⚡</div>
+                <div class="icon-label">Skills.dll</div>
+            </div>
+            <div class="desktop-icon" onclick="openWindow('contact')">
+                <div class="icon-image">📡</div>
+                <div class="icon-label">Contact.net</div>
+            </div>
+        </div>
+
+        <div class="window" id="about-window">
+            <div class="window-header">
+                <span>👤 About.exe - Holographic Profile</span>
+                <div class="window-controls">
+                    <div class="window-button" onclick="minimizeWindow('about')">_</div>
+                    <div class="window-button" onclick="closeWindow('about')">X</div>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="warning-bar">⚡ CYBER PROFILE - CLASSIFIED ⚡</div><br>
+                <div style="color:#00ffff">
+                    <div>> Identity: Ercument Berke Arastaman</div>
+                    <div>> Level: Software </div>
+                    <div>> System: brk Protocol</div>
+                    <div>> Mission: Build the future with retro soul</div><br>
+                    <div>> Profile:</div>
+                    <div style="color:#ff00ff;margin-left:20px">
+                        I exist in the intersection of 2000s nostalgia and<br>
+                        cutting-edge technology. My code bridges dimensions,<br>
+                        bringing the BRK aesthetic into modern applications.<br><br>
+                        Specializing in neon interfaces, glitch art generators,<br>
+                        and cyberpunk web experiences that transport users<br>
+                        to a digital utopia.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="projects-window">
+            <div class="window-header">
+                <span>📁 Projects.sys - Data Archive</span>
+                <div class="window-controls">
+                    <div class="window-button" onclick="minimizeWindow('projects')">_</div>
+                    <div class="window-button" onclick="closeWindow('projects')">X</div>
+                </div>
+            </div>
+            <div class="window-content">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;height:100%">
+                    <div style="border-right:3px ridge #00ffff;padding-right:10px">
+                        <div class="nav-item active" onclick="showProject('glitch')">🎨 Glitch.exe</div>
+                        <div class="nav-item" onclick="showProject('chat')">💬 NeonChat.sys</div>
+                        <div class="nav-item" onclick="showProject('wallet')">💰 CypherWallet.dll</div>
+                        <div class="nav-item" onclick="showProject('terminal')">🖥️ MatrixTerm.exe</div>
+                    </div>
+                    <div id="project-details">
+                        <div class="project-card-y2k">
+                            <h3>🎨 Glitch Art Generator</h3>
+                            <p style="color:#ff00ff">Real-time holographic glitch effects</p>
+                            <p><span style="color:#00ffff">Tech:</span> WebGL, Three.js, GLSL</p>
+                            <p><span style="color:#ffff00">Status:</span> ✅ COMPLETE</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="skills-window">
+            <div class="window-header">
+                <span>⚡ Skills.dll - System Analysis</span>
+                <div class="window-controls">
+                    <div class="window-button" onclick="minimizeWindow('skills')">_</div>
+                    <div class="window-button" onclick="closeWindow('skills')">X</div>
+                </div>
+            </div>
+            <div class="window-content">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px">
+                    <div>
+                        <h3 style="color:#ff00ff">Frontend Arsenal</h3>
+                        <div style="margin:10px 0">JavaScript <div class="skill-bar">
+                                <div class="skill-fill" style="width:95%"></div>
+                            </div>
+                        </div>
+                        <div style="margin:10px 0">React.js <div class="skill-bar">
+                                <div class="skill-fill" style="width:92%"></div>
+                            </div>
+                        </div>
+                        <div style="margin:10px 0">WebGL <div class="skill-bar">
+                                <div class="skill-fill" style="width:88%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="color:#00ffff">Backend Matrix</h3>
+                        <div style="margin:10px 0">Node.js <div class="skill-bar">
+                                <div class="skill-fill" style="width:90%"></div>
+                            </div>
+                        </div>
+                        <div style="margin:10px 0">Python <div class="skill-bar">
+                                <div class="skill-fill" style="width:85%"></div>
+                            </div>
+                        </div>
+                        <div style="margin:10px 0">Blockchain <div class="skill-bar">
+                                <div class="skill-fill" style="width:78%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div style="color:#ffff00">>> Additional: Docker, AWS, Socket.io, Cyber Security</div>
+            </div>
+        </div>
+
+        <div class="window" id="contact-window">
+            <div class="window-header">
+                <span>📡 Contact.net - Network Portal</span>
+                <div class="window-controls">
+                    <div class="window-button" onclick="minimizeWindow('contact')">_</div>
+                    <div class="window-button" onclick="closeWindow('contact')">X</div>
+                </div>
+            </div>
+            <div class="window-content">
+                <h3 style="color:#00ffff">Connect to the Matrix:</h3>
+                <div class="contact-links-y2k">
+                    <a href="https://github.com/1337-c0d3r" class="contact-link-y2k" target="_blank">💻 GitHub
+                        Repository</a>
+                    <a href="https://linkedin.com/in/1337-c0d3r" class="contact-link-y2k" target="_blank">💼 LinkedIn
+                        Profile</a>
+                    <a href="https://twitter.com/1337_c0d3r" class="contact-link-y2k" target="_blank">🐦 Twitter
+                        Feed</a>
+                    <a href="https://discord.gg/1337" class="contact-link-y2k" target="_blank">🎮 Discord Server</a>
+                </div>
+                <br>
+                <div style="color:#ff00ff">>> PGP Key: 0xA1B2C3D4E5F67890</div>
+            </div>
+        </div>
+
+        <div class="taskbar">
+            <button class="start-button" onclick="toggleStartMenu()">🪟 START</button>
+            <div class="start-menu" id="startMenu">
+                <div class="start-item" onclick="openWindow('about')">👤 About Me</div>
+                <div class="start-item" onclick="openWindow('projects')">📁 Projects</div>
+                <div class="start-item" onclick="openWindow('skills')">⚡ Skills</div>
+                <div class="start-menu-divider"></div>
+                <div class="start-item" onclick="openWindow('contact')">📡 Contact</div>
+                <div class="start-menu-divider"></div>
+                <div class="start-item" onclick="shutdown()">🔴 Shutdown</div>
+            </div>
+            <div style="margin-left:auto;color:#00ffff;font-weight:bold">
+                <span id="clock">00:00:00</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Boot sequence
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('boot-screen').style.display = 'none';
+                document.getElementById('desktop').style.display = 'block';
+
+                // Retro startup sound
+                const audio = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audio.createOscillator();
+                const gain = audio.createGain();
+                osc.connect(gain); gain.connect(audio.destination);
+
+                osc.frequency.setValueAtTime(523.25, audio.currentTime);
+                osc.frequency.setValueAtTime(659.25, audio.currentTime + 0.1);
+                osc.frequency.setValueAtTime(783.99, audio.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.1, audio.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audio.currentTime + 0.3);
+                osc.start(); osc.stop(audio.currentTime + 0.3);
+            }, 6000);
+        });
+
+        // Window management
+        function openWindow(windowId) {
+            const win = document.getElementById(windowId + '-window');
+            win.style.display = 'block';
+            win.style.zIndex = '200';
+            win.style.left = '50%';
+            win.style.top = '50%';
+            win.style.transform = 'translate(-50%, -50%)';
+        }
+        function closeWindow(windowId) { document.getElementById(windowId + '-window').style.display = 'none'; }
+        function minimizeWindow(windowId) { document.getElementById(windowId + '-window').style.display = 'none'; }
+
+        // Start menu
+        function toggleStartMenu() {
+            const menu = document.getElementById('startMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Project navigation
+        function showProject(project) {
+            const projects = {
+                'glitch': { title: '🎨 Glitch Art Generator', desc: 'Real-time holographic glitch effects', tech: 'WebGL, Three.js, GLSL', status: '✅ ACTIVE' },
+                'chat': { title: '💬 Neon Chat App', desc: 'Retro-themed real-time communication', tech: 'Socket.io, Node.js, React', status: '🔄 BUILDING' },
+                'wallet': { title: '💰 Cypher Wallet', desc: 'Blockchain-based secure transactions', tech: 'Solidity, Web3.js, Ethereum', status: '🧪 TESTING' },
+                'terminal': { title: '🖥️ Matrix Terminal', desc: 'Film-inspired command interface', tech: 'Electron, Node.js, ASCII', status: '✅ COMPLETE' }
+            };
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('project-details').innerHTML = `
+                <div class="project-card-y2k">
+                    <h3>${projects[project].title}</h3>
+                    <p style="color:#ff00ff">${projects[project].desc}</p>
+                    <p><span style="color:#00ffff">Tech:</span> ${projects[project].tech}</p>
+                    <p><span style="color:#ffff00">Status:</span> ${projects[project].status}</p>
+                </div>
+            `;
+        }
+
+        // Clock
+        function updateClock() {
+            document.getElementById('clock').textContent = new Date().toLocaleTimeString('tr-TR');
+        }
+        setInterval(updateClock, 1000); updateClock();
+
+        // Shutdown
+        function shutdown() {
+            document.getElementById('desktop').style.display = 'none';
+            document.getElementById('boot-screen').style.display = 'flex';
+            document.getElementById('boot-screen').innerHTML = `
+                <div style="color:#ff00ff;font-size:48px">SYSTEM OFFLINE</div>
+                <div style="color:#00ffff;margin-top:20px">Thank you for visiting BRK Systems</div>
+            `;
+        }
+
+        // Drag windows
+        let dragging = null, offsetX = 0, offsetY = 0;
+        document.querySelectorAll('.window-header').forEach(header => {
+            header.addEventListener('mousedown', (e) => {
+                dragging = header.parentElement;
+                dragging.style.zIndex = '300';
+                dragging.style.transform = 'none';
+                const rect = dragging.getBoundingClientRect();
+                offsetX = e.clientX - rect.left;
+                offsetY = e.clientY - rect.top;
+            });
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (dragging) {
+                dragging.style.left = (e.clientX - offsetX) + 'px';
+                dragging.style.top = (e.clientY - offsetY) + 'px';
+            }
+        });
+        document.addEventListener('mouseup', () => { dragging = null; });
+
+        // Close start menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.start-button') && !e.target.closest('.start-menu')) {
+                document.getElementById('startMenu').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İsminiz | Portfolyo</title>
+
+    <!-- Google Fonts: Oswald & Orbitron -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@700&family=Orbitron:wght@900&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            --p5-red: #ff0101;
+            --p5-black: #0f0f0f;
+            /* Saf siyahtan biraz daha yumuşak */
+            --p5-white: #ffffff;
+        }
+
+        /* Font Stilleri */
+        body {
+            font-family: 'Teko', sans-serif;
+            background-color: var(--p5-black);
+            color: var(--p5-white);
+            overflow: hidden;
+            cursor: default;
+            letter-spacing: 0.03em;
+        }
+
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .p5-title-effect {
+            text-shadow:
+                -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000,
+                -4px -4px 0 #000, 4px -4px 0 #000, -4px 4px 0 #000, 4px 4px 0 #000,
+                -6px -6px 0 #000, 6px -6px 0 #000, -6px 6px 0 #000, 6px 6px 0 #000,
+                8px 8px 0 var(--p5-red),
+                10px 10px 0 rgba(0, 0, 0, 0.5);
+            /* Ekstra gölge ile derinlik */
+        }
+
+        /* --- YENİLENMİŞ P5 EFEKTLERİ --- */
+        #p5-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -3;
+            background-color: var(--p5-black);
+            background-image: radial-gradient(circle at 0% 100%, rgba(255, 1, 1, 0.25), transparent 40%);
+        }
+
+        #p5-bg-pattern {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 200vmax;
+            height: 200vmax;
+            transform: translate(-50%, -50%);
+            z-index: -2;
+            background-image: repeating-conic-gradient(from 0deg, #fff 0% 0.3%, transparent 0.3% 10%);
+            opacity: 0.1;
+            animation: bg-rotate 120s linear infinite;
+        }
+
+        @keyframes bg-rotate {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        #noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0.07;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuODUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjbG5vaXNlKSIvPjwvc3ZnPg==');
+            animation: grain 1.5s steps(10) infinite;
+        }
+
+        @keyframes grain {
+
+            0%,
+            100% {
+                transform: translate(0, 0)
+            }
+
+            10% {
+                transform: translate(-1%, -1%)
+            }
+
+            20% {
+                transform: translate(1%, 1%)
+            }
+
+            30% {
+                transform: translate(-2%, 2%)
+            }
+
+            40% {
+                transform: translate(2%, -1%)
+            }
+
+            50% {
+                transform: translate(-1%, 2%)
+            }
+
+            60% {
+                transform: translate(2%, 1%)
+            }
+
+            70% {
+                transform: translate(-2%, -2%)
+            }
+
+            80% {
+                transform: translate(1%, -2%)
+            }
+
+            90% {
+                transform: translate(-1%, 1%)
+            }
+        }
+
+
+        /* Sayfa odakta olmadığında animasyonları duraklat */
+        body.animations-paused #p5-bg-pattern,
+        body.animations-paused #noise-overlay {
+            animation-play-state: paused;
+        }
+
+        #take-your-time {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 2rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fade-in-subtle 2s 1s forwards;
+            z-index: 100;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        @keyframes fade-in-subtle {
+            to {
+                opacity: 0.8;
+            }
+        }
+
+        /* --- YENİLENMİŞ NAVİGASYON --- */
+        #main-nav {
+            position: fixed;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            z-index: 200;
+        }
+
+        .nav-item {
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 1rem 5rem 1rem 2.5rem;
+            margin: 0.75rem 0;
+            color: var(--p5-white);
+            background-color: var(--p5-black);
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+            clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
+            transform-origin: right;
+            border-left: 6px solid var(--p5-red);
+            position: relative;
+            overflow: hidden;
+            border-right: 4px solid transparent;
+            font-style: italic;
+            transform: skewX(-10deg);
+        }
+
+        .nav-item:hover {
+            background-color: var(--p5-red);
+            transform: skewX(-10deg) scaleX(1.1) rotate(-2deg);
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+            color: var(--p5-white);
+            text-shadow: 2px 2px 0px var(--p5-black);
+            border-left-color: var(--p5-black);
+        }
+
+        .nav-item.active {
+            background-color: var(--p5-white);
+            transform: skewX(-10deg) scaleX(1.15);
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+            border-left-color: var(--p5-red);
+            border-right-color: var(--p5-red);
+            color: var(--p5-red);
+            text-shadow: none;
+        }
+
+
+        /* Mobil Navigasyon */
+        #mobile-nav-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.97);
+            z-index: 199;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #mobile-nav-menu .nav-item {
+            font-size: 2rem;
+            transform: scaleX(1);
+            clip-path: polygon(0 0, 95% 0, 85% 100%, 0% 100%);
+        }
+
+        #mobile-nav-menu .nav-item.active {
+            transform: scaleX(1.1);
+        }
+
+        /* İçerik ve Geçişler */
+        .content-section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            display: flex;
+            justify-content: center;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .content-section.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 50;
+            overflow-y: auto;
+        }
+
+        .content-section.active::-webkit-scrollbar {
+            display: none;
+        }
+
+        .content-section.active {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Harf harf animasyon */
+        .p5-reveal-text span {
+            opacity: 0;
+            transform: translateY(25px) rotate(5deg);
+            display: inline-block;
+            animation: reveal-char 0.4s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes reveal-char {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+
+        #home::before {
+            content: 'Take Your Heart';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            text-align: center;
+            transform: translate(-50%, -50%) rotate(-5deg) scale(1.2);
+            font-size: 10vw;
+            color: var(--p5-white);
+            opacity: 0.03;
+            z-index: -1;
+            font-weight: 900;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1rem;
+        }
+
+        .subtitle-box {
+            background: var(--p5-red);
+            padding: 0.5rem 2.5rem;
+            display: inline-block;
+            transform: rotate(-3deg);
+            margin-top: 1.5rem;
+            clip-path: polygon(0 0, 100% 10%, 95% 100%, 5% 90%);
+        }
+
+        .subtitle-box p {
+            color: var(--p5-white);
+            font-weight: 700;
+            text-shadow: 2px 2px 0 var(--p5-black);
+        }
+
+        /* --- YENİLENMİŞ GEÇİŞ EFEKTİ --- */
+        #transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            pointer-events: none;
+            display: flex;
+        }
+
+        .transition-shape {
+            width: 20%;
+            height: 120%;
+            background-color: var(--p5-red);
+            transform: skewX(-20deg) translateX(-100vw);
+        }
+
+        #transition-overlay.wipe .transition-shape {
+            animation: transition-wipe 0.8s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+        }
+
+        .transition-shape:nth-child(2) {
+            animation-delay: 0.05s;
+            background-color: var(--p5-white);
+        }
+
+        .transition-shape:nth-child(3) {
+            animation-delay: 0.1s;
+        }
+
+        .transition-shape:nth-child(4) {
+            animation-delay: 0.15s;
+            background-color: var(--p5-white);
+        }
+
+        .transition-shape:nth-child(5) {
+            animation-delay: 0.2s;
+        }
+
+        .transition-shape:nth-child(6) {
+            animation-delay: 0.25s;
+            background-color: var(--p5-white);
+        }
+
+        .transition-shape:nth-child(6) {
+            animation-delay: 0.30s;
+
+        }
+
+        @keyframes transition-wipe {
+            0% {
+                transform: skewX(-20deg) translateX(-100vw);
+            }
+
+            50% {
+                transform: skewX(-20deg) translateX(0);
+            }
+
+            100% {
+                transform: skewX(-20deg) translateX(100vw);
+            }
+        }
+
+
+        .contact-link-wrapper {
+            border: 4px solid var(--p5-white);
+            transition: all 0.2s ease-in-out;
+            clip-path: polygon(0% 15%, 15% 0%, 100% 0%, 85% 100%, 0% 100%);
+            background: var(--p5-black);
+            position: relative;
+        }
+
+        .contact-link-wrapper:hover {
+            background: var(--p5-red);
+            border-color: var(--p5-red);
+            transform: scale(1.1) rotate(-3deg);
+        }
+
+        .contact-link {
+            display: block;
+            padding: 1rem 3rem;
+            color: var(--p5-white);
+            text-shadow: 2px 2px 2px #000;
+        }
+
+        .contact-link-wrapper:hover .contact-link {
+            color: var(--p5-white);
+            font-weight: bold;
+        }
+
+        .project-card {
+            transition: all 0.2s ease-out;
+            border: 3px solid #fff;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(2px);
+        }
+
+        .project-card:hover {
+            transform: rotate(-2deg) scale(1.05);
+            border-color: var(--p5-red);
+            background-color: rgba(15, 15, 15, 0.8);
+        }
+
+        /* Proje Detay Overlay */
+        #project-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        #project-overlay.open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .project-overlay-content {
+            background-color: var(--p5-black);
+            border: 4px solid var(--p5-red);
+            padding: 3rem;
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+            clip-path: polygon(0 5%, 5% 0, 95% 0, 100% 5%, 100% 95%, 95% 100%, 5% 100%, 0 95%);
+        }
+
+        #project-overlay.open .project-overlay-content {
+            transform: scale(1);
+        }
+
+        #project-overlay-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 50px;
+            height: 50px;
+            background: transparent;
+            border: 0;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            z-index: 10;
+        }
+
+        #project-overlay-close:hover {
+            transform: rotate(180deg);
+        }
+
+        #project-overlay-close::before,
+        #project-overlay-close::after {
+            content: '';
+            position: absolute;
+            top: 23px;
+            left: 5px;
+            width: 40px;
+            height: 4px;
+            background-color: var(--p5-white);
+            transition: background-color 0.2s;
+        }
+
+        #project-overlay-close::before {
+            transform: rotate(45deg);
+        }
+
+        #project-overlay-close::after {
+            transform: rotate(-45deg);
+        }
+
+        #project-overlay-close:hover::before,
+        #project-overlay-close:hover::after {
+            background-color: var(--p5-red);
+        }
+
+
+        #project-detail-links a {
+            border: 2px solid var(--p5-white);
+            padding: 0.5rem 1.5rem;
+            margin: 0.5rem;
+            display: inline-block;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
+
+        #project-detail-links a:hover {
+            background-color: var(--p5-red);
+            border-color: var(--p5-red);
+            color: var(--p5-black);
+            transform: scale(1.1);
+            font-weight: bold;
+        }
+
+        /* Cephanelik (Skills) Bölümü */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 60rem;
+        }
+
+        .skill-item {
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid var(--p5-white);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            transition: all 0.2s ease-out;
+            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item .fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--p5-red);
+            transform: skew(-20deg) translateX(-120%);
+            transition: transform 0.3s cubic-bezier(0.7, 0, 0.3, 1);
+            z-index: 0;
+        }
+
+        .skill-item:hover .fill {
+            transform: skew(-20deg) translateX(-10%);
+        }
+
+        .skill-item:hover {
+            border-color: var(--p5-red);
+            transform: scale(1.05);
+        }
+
+        .skill-item i,
+        .skill-item p {
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease-out;
+        }
+
+        .skill-item:hover i,
+        .skill-item:hover p {
+            color: var(--p5-white);
+            text-shadow: 1px 1px 2px var(--p5-black);
+        }
+
+        .skill-item i {
+            font-size: 3.5rem;
+            color: var(--p5-white);
+            margin-bottom: 0.75rem;
+        }
+
+        .skill-item p {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            color: var(--p5-white);
+            letter-spacing: 0.1em;
+        }
+
+        .inventory-category {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--p5-white);
+            background-color: var(--p5-red);
+            padding: 0.5rem 2rem;
+            margin: 2.5rem 0 1.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+            text-shadow: 2px 2px 0 var(--p5-black);
+        }
+
+        .inventory-category i {
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 1024px) {
+            #main-nav {
+                display: none;
+            }
+
+            #mobile-nav-toggle {
+                display: block;
+                position: fixed;
+                top: 1.5rem;
+                right: 1.5rem;
+                z-index: 201;
+                background: var(--p5-red);
+                color: white;
+                border: none;
+                width: 60px;
+                height: 50px;
+                font-size: 1.2rem;
+                font-weight: bold;
+                clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+                cursor: pointer;
+            }
+
+            #mobile-nav-menu.open {
+                display: flex;
+            }
+
+            .home-title {
+                font-size: 4.5rem !important;
+            }
+
+            .section-title {
+                font-size: 3rem !important;
+            }
+
+            .project-grid,
+            .skills-grid {
+                grid-template-columns: 1fr 1fr !important;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .content-section .content-wrapper {
+                padding-right: 28rem;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- YENİ ARKA PLAN EFEKTLERİ -->
+    <div id="p5-bg"></div>
+    <div id="p5-bg-pattern"></div>
+    <div id="noise-overlay"></div>
+
+    <div id="take-your-time">Take Your Time</div>
+
+    <!-- YENİ GEÇİŞ EFEKTİ -->
+    <div id="transition-overlay">
+        <div class="transition-shape"></div>
+        <div class="transition-shape"></div>
+        <div class="transition-shape"></div>
+        <div class="transition-shape"></div>
+        <div class="transition-shape"></div>
+        <div class="transition-shape"></div>
+        <div class="transition-shape"></div>
+    </div>
+
+
+    <button id="mobile-nav-toggle" class="hidden">MENÜ</button>
+
+    <nav id="main-nav">
+        <ul>
+            <li><button class="nav-item active" data-target="home">Ana Sayfa</button></li>
+            <li><button class="nav-item" data-target="skills">Cephanelik</button></li>
+            <li><button class="nav-item" data-target="projects">Projeler</button></li>
+            <li><button class="nav-item" data-target="contact">İletişim</button></li>
+        </ul>
+    </nav>
+    <nav id="mobile-nav-menu">
+        <ul>
+            <li><button class="nav-item active" data-target="home">Ana Sayfa</button></li>
+            <li><button class="nav-item" data-target="skills">Cephanelik</button></li>
+            <li><button class="nav-item" data-target="projects">Projeler</button></li>
+            <li><button class="nav-item" data-target="contact">İletişim</button></li>
+        </ul>
+    </nav>
+
+    <main class="relative w-full h-screen">
+        <section id="home" class="content-section active">
+            <div class="content-wrapper text-center px-4 flex flex-col items-center justify-center">
+                <div class="home-title text-6xl sm:text-7xl md:text-8xl font-bold uppercase p5-title-effect"
+                    style="transform: rotate(-3deg); line-height: 0.8;">
+                    <div class="p5-reveal-text" style="letter-spacing: -3px;">Ercüment</div>
+                    <div class="p5-reveal-text" style="letter-spacing: -3px;">Berke Arastaman</div>
+                </div>
+                <div class="subtitle-box">
+                    <p class="text-xl sm:text-2xl md:text-3xl uppercase p5-reveal-text" style="letter-spacing: 0.2em;">
+                        Geliştirici Oyun/Web</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="content-section">
+            <div class="content-wrapper w-full max-w-6xl mx-auto text-center px-4 py-24 flex flex-col items-center">
+                <h2
+                    class="section-title text-7xl sm:text-8xl md:text-9xl font-bold uppercase mb-8 p5-title-effect p5-reveal-text">
+                    CEPHANELİK</h2>
+
+                <div class="inventory-category p5-reveal-text"><i class="fas fa-code"></i>Programlama Dilleri</div>
+                <div class="skills-grid mb-8">
+                    <div class="skill-item p5-reveal-text">
+                        <div class="fill"></div><i class="fab fa-js-square"></i>
+                        <p>JavaScript</p>
+                    </div>
+                    <div class="skill-item p5-reveal-text">
+                        <div class="fill"></div><i class="fab fa-python"></i>
+                        <p>Python</p>
+                    </div>
+                    <div class="skill-item p5-reveal-text">
+                        <div class="fill"></div><i class="fab fa-java"></i>
+                        <p>Java</p>
+                    </div>
+                    <div class="skill-item p5-reveal-text">
+                        <div class="fill"></div><i class="fas fa-gem"></i>
+                        <p>Ruby</p>
+                    </div>
+                </div>
+
+                <div class="inventory-category p5-reveal-text"><i class="fas fa-bolt"></i>Framework & Kütüphaneler
+                </div>
+                <div class="skills-grid mb-8">
+                    <div class="skill-item p5-reveal-text">
+                        <div class="fill"></div><i class="fab fa-react"></i>
+                        <p>React</p>
+                    </div>
+                    <div class="skill-item p5-reveal-text">
+                        <div class="fill"></div><i class="fab fa-node-js"></i>
+                        <p>Node.js</p>
+                    </div>
+                    <div class="skill-item p5-reveal-text">
+                        <div class="fill"></div><i class="fab fa-vuejs"></i>
+                        <p>Vue.js</p>
+                    </div>
+                    <div class="skill-item p5-reveal-text">
+                        <div class="fill"></div><i class="fas fa-server"></i>
+                        <p>Express</p>
+                    </div>
+                </div>
+
+                <div class="inventory-category p5-reveal-text"><i class="fas fa-toolbox"></i>Tasarım & Araçlar</div>
+                <div class="skills-grid mb-40">
+                    <div class="skill-item p5-reveal-text">
+                        <div class="fill"></div><i class="fab fa-html5"></i>
+                        <p>HTML5</p>
+                    </div>
+                    <div class="skill-item p5-reveal-text">
+                        <div class="fill"></div><i class="fab fa-css3-alt"></i>
+                        <p>CSS3</p>
+                    </div>
+                    <div class="skill-item p5-reveal-text">
+                        <div class="fill"></div><i class="fab fa-figma"></i>
+                        <p>Figma</p>
+                    </div>
+                    <div class="skill-item p5-reveal-text">
+                        <div class="fill"></div><i class="fab fa-git-alt"></i>
+                        <p>Git</p>
+                    </div>
+                    <div class="skill-item p5-reveal-text">
+                        <div class="fill"></div><i class="fas fa-database"></i>
+                        <p>Database</p>
+                    </div>
+                    <div class="skill-item p5-reveal-text">
+                        <div class="fill"></div><i class="fab fa-docker"></i>
+                        <p>Docker</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="content-section">
+            <div class="content-wrapper w-full max-w-6xl mx-auto text-center px-4 py-24">
+                <h2
+                    class="section-title text-7xl sm:text-8xl md:text-9xl font-bold uppercase mb-12 p5-title-effect p5-reveal-text">
+                    PROJELER</h2>
+                <div class="project-grid grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                    <div class="project-card p-6" style="clip-path: polygon(0 0, 100% 5%, 95% 100%, 0% 95%);"
+                        data-title="Proje Adı 1: E-Ticaret Platformu"
+                        data-description="Modern web teknolojileri, PWA özellikleri ve özelleştirilebilir bir admin paneli kullanılarak geliştirilmiş, yüksek performanslı bir e-ticaret platformu."
+                        data-links='[{"text":"Canlı Demo", "url":"#"}, {"text":"GitHub", "url":"#"}]'>
+                        <h3 class="text-3xl font-orbitron text-p5-red mb-2 p5-reveal-text">Proje Adı 1</h3>
+                        <p class="font-sans text-lg mb-4 p5-reveal-text">Modern web teknolojileri kullanılarak
+                            geliştirilmiş bir e-ticaret platformu.</p>
+                        <a href="#"
+                            class="project-detail-trigger font-bold hover:text-p5-red transition-colors p5-reveal-text">DAHA
+                            FAZLA ></a>
+                    </div>
+                    <div class="project-card p-6" style="clip-path: polygon(5% 0, 100% 0, 100% 95%, 0 100%);"
+                        data-title="Proje Adı 2: Sosyal Medya Konsepti"
+                        data-description="Kullanıcıların içerik paylaşabildiği, anlık mesajlaşma ve bildirim sistemine sahip, React ve Firebase ile geliştirilmiş bir sosyal medya uygulaması konsepti."
+                        data-links='[{"text":"Tasarım Dosyası", "url":"#"}, {"text":"Prototip", "url":"#"}]'>
+                        <h3 class="text-3xl font-orbitron text-p5-red mb-2 p5-reveal-text">Proje Adı 2</h3>
+                        <p class="font-sans text-lg mb-4 p5-reveal-text">Kullanıcıların içerik paylaşabildiği bir sosyal
+                            medya uygulaması konsepti.</p>
+                        <a href="#"
+                            class="project-detail-trigger font-bold hover:text-p5-red transition-colors p5-reveal-text">DAHA
+                            FAZLA ></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="content-section">
+            <div class="content-wrapper text-center px-4 flex flex-col justify-center items-center">
+                <h2
+                    class="section-title text-7xl sm:text-8xl md:text-9xl font-bold uppercase mb-12 p5-title-effect p5-reveal-text">
+                    İLETİŞİM</h2>
+                <div class="space-y-8 text-2xl sm:text-3xl uppercase tracking-wider max-w-sm mx-auto w-full">
+                    <div class="contact-link-wrapper p5-reveal-text"><a href="#" class="contact-link">EMAIL</a></div>
+                    <div class="contact-link-wrapper p5-reveal-text"><a href="#" class="contact-link">LINKEDIN</a>
+                    </div>
+                    <div class="contact-link-wrapper p5-reveal-text"><a href="#" class="contact-link">GITHUB</a></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="project-overlay">
+        <div class="project-overlay-content">
+            <button id="project-overlay-close" aria-label="Kapat"></button>
+            <h2 id="project-detail-title" class="text-4xl font-orbitron text-p5-red mb-4"></h2>
+            <p id="project-detail-description" class="font-sans text-lg mb-6"></p>
+            <div id="project-detail-links" class="space-x-4"></div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navContainers = [document.getElementById('main-nav'), document.getElementById('mobile-nav-menu')];
+            const transitionOverlay = document.getElementById('transition-overlay');
+            const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+            const mobileNavMenu = document.getElementById('mobile-nav-menu');
+            let isTransitioning = false;
+
+            function setupTextAnimation(section) {
+                const elementsToAnimate = section.querySelectorAll('.p5-reveal-text');
+                elementsToAnimate.forEach(el => {
+                    if (el.dataset.animated) { // Eğer zaten bölünmüşse tekrar yapma
+                        // Sadece animasyonları sıfırla
+                        const spans = el.querySelectorAll('span');
+                        spans.forEach(span => {
+                            span.style.animation = 'none';
+                            span.style.opacity = '0';
+                            span.style.transform = 'translateY(25px) rotate(5deg)';
+                        });
+                        return;
+                    };
+                    const text = el.textContent.trim();
+                    el.innerHTML = '';
+                    text.split('').forEach(char => {
+                        const span = document.createElement('span');
+                        span.textContent = char;
+                        if (char.trim() === '') span.style.display = 'inline';
+                        span.style.opacity = '0';
+                        el.appendChild(span);
+                    });
+                    el.dataset.animated = true;
+                });
+            }
+
+            function animateContentIn(section) {
+                setupTextAnimation(section);
+                const spans = section.querySelectorAll('.p5-reveal-text span');
+                const delay = (section.id === 'home') ? 20 : 8;
+                spans.forEach((span, index) => {
+                    span.offsetHeight; // Reflow
+                    span.style.animation = `reveal-char 0.4s cubic-bezier(0.2, 1, 0.3, 1) forwards`;
+                    span.style.animationDelay = `${index * delay}ms`;
+                });
+            }
+
+            function animateContentOut(section) {
+                const elements = section.querySelectorAll('.p5-reveal-text span');
+                elements.forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(25px) rotate(5deg)';
+                });
+            }
+
+            function switchTab(targetId) {
+                if (isTransitioning) return;
+                const currentActiveSection = document.querySelector('.content-section.active');
+                const nextActiveSection = document.getElementById(targetId);
+                if (!nextActiveSection || currentActiveSection.id === targetId) return;
+
+                isTransitioning = true;
+                animateContentOut(currentActiveSection);
+                transitionOverlay.classList.add('wipe');
+
+                setTimeout(() => {
+                    currentActiveSection.classList.remove('active');
+                    nextActiveSection.classList.add('active');
+                    animateContentIn(nextActiveSection);
+
+                    navContainers.forEach(container => {
+                        container.querySelector('.nav-item.active')?.classList.remove('active');
+                        container.querySelector(`.nav-item[data-target="${targetId}"]`)?.classList.add('active');
+                    });
+
+                    if (mobileNavMenu.classList.contains('open')) {
+                        mobileNavMenu.classList.remove('open');
+                    }
+                }, 400); // Geçiş animasyonunun ortasında içerik değiştir
+
+                const firstShape = transitionOverlay.querySelector('.transition-shape');
+                firstShape.addEventListener('animationend', () => {
+                    transitionOverlay.classList.remove('wipe');
+                    isTransitioning = false;
+                }, { once: true });
+            }
+
+            // İlk yüklemede ana sayfa animasyonunu tetikle
+            animateContentIn(document.querySelector('#home'));
+
+            navContainers.forEach(container => {
+                container.addEventListener('click', (e) => {
+                    if (e.target.matches('.nav-item')) {
+                        const targetId = e.target.dataset.target;
+                        switchTab(targetId);
+                    }
+                });
+            });
+
+            mobileNavToggle.addEventListener('click', () => {
+                mobileNavMenu.classList.toggle('open');
+            });
+
+            // --- Proje Overlay Logic ---
+            const projectOverlay = document.getElementById('project-overlay');
+            const projectOverlayClose = document.getElementById('project-overlay-close');
+            const detailTriggers = document.querySelectorAll('.project-detail-trigger');
+
+            const detailTitle = document.getElementById('project-detail-title');
+            const detailDescription = document.getElementById('project-detail-description');
+            const detailLinks = document.getElementById('project-detail-links');
+
+            detailTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const card = e.target.closest('.project-card');
+                    const title = card.dataset.title;
+                    const description = card.dataset.description;
+                    const links = JSON.parse(card.dataset.links);
+
+                    detailTitle.textContent = title;
+                    detailDescription.textContent = description;
+                    detailLinks.innerHTML = ''; // Önceki linkleri temizle
+
+                    links.forEach(link => {
+                        const a = document.createElement('a');
+                        a.href = link.url;
+                        a.textContent = link.text;
+                        a.target = '_blank'; // Linkleri yeni sekmede aç
+                        a.rel = 'noopener noreferrer';
+                        detailLinks.appendChild(a);
+                    });
+
+                    projectOverlay.classList.add('open');
+                });
+            });
+
+            function closeOverlay() {
+                projectOverlay.classList.remove('open');
+            }
+
+            projectOverlayClose.addEventListener('click', closeOverlay);
+            projectOverlay.addEventListener('click', (e) => {
+                if (e.target === projectOverlay) {
+                    closeOverlay();
+                }
+            });
+
+            // Sayfa görünürlüğü değiştiğinde animasyonları duraklat/devam ettir
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    document.body.classList.add('animations-paused');
+                } else {
+                    document.body.classList.remove('animations-paused');
+                }
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>
