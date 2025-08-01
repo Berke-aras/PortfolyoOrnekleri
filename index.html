@@ -160,6 +160,33 @@
                 transform: translate(1px, -2px) rotate(-1deg);
             }
         }
+
+        .footer-links {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 20, 0, 0.7);
+            border: 2px solid #00FF00;
+            padding: 10px 20px;
+            box-shadow: 0 0 15px #00FF00;
+            z-index: 100;
+        }
+
+        .footer-links a {
+            font-size: 1.2rem;
+            margin: 0 15px;
+        }
+
+        .footer-links a::before {
+            content: none;
+            /* Remove the '>' from footer links */
+        }
+
+        .footer-links .separator {
+            color: #00FF00;
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 
@@ -173,6 +200,13 @@
             <li><a href="index5.html" target="_blank">PROJE_04</a></li>
         </ul>
     </div>
+
+    <footer class="footer-links">
+        <a href="https://github.com/Berke-aras" target="_blank">GITHUB</a>
+        <span class="separator">|</span>
+        <a href="https://github.com/Berke-aras/PortfolyoOrnekleri" target="_blank">PROJE KAYNAĞI</a>
+    </footer>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const container = document.querySelector('.container');
