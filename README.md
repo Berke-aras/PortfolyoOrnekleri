@@ -1,4 +1,4 @@
-# Y2K Portfolyo Koleksiyonu
+# Portfolyo Koleksiyonu
 
 Bu repo, 2000'lerin başındaki (Y2K) dijital estetikten, siberpunktan ve çeşitli video oyunlarından ilham alan interaktif portfolyo web siteleri koleksiyonunu içermektedir. Her bir proje, farklı bir tema ve teknoloji seti üzerine kurulmuştur ve birlikte, yaratıcı ve nostaljik bir dijital deneyim sunarlar.
 
