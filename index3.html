@@ -941,6 +941,117 @@
             animation-play-state: paused !important;
             transition: none !important;
         }
+
+        /* --- Duyarlı Tasarım --- */
+        @media (max-width: 820px) {
+            .main-container {
+                width: 95vw;
+                height: 85vh;
+                /* Daha küçük ekranlarda yeniden boyutlandırmayı devre dışı bırak */
+                resize: none;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 15px;
+            }
+
+            nav {
+                gap: 10px;
+            }
+
+            nav button {
+                font-size: 1rem;
+                padding: 5px 10px;
+            }
+
+            .project-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .project-card p {
+                font-size: 0.9rem;
+            }
+
+            .system-status {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                overflow-y: auto;
+            }
+
+            .main-container {
+                width: 100vw !important;
+                height: 100vh !important;
+                top: 0 !important;
+                left: 0 !important;
+                max-width: none;
+                max-height: none;
+                border: none;
+                box-shadow: none;
+                padding: 5px;
+                resize: none;
+                position: relative;
+            }
+
+            header.window-header {
+                font-size: 1rem;
+                padding: 5px;
+                cursor: default !important;
+            }
+
+            /* Mobil cihazlarda ekranı kapla düğmesi gizlendi */
+            #maximize-btn {
+                display: none;
+            }
+
+            .lang-switcher span {
+                margin-left: 3px;
+                font-size: 0.9rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                letter-spacing: 3px;
+                margin-bottom: 10px;
+            }
+
+            main {
+                padding: 10px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 5px;
+                margin-bottom: 10px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            footer {
+                padding-top: 5px;
+                min-height: auto;
+            }
+
+            .system-status {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 3px;
+                padding: 5px;
+                margin-top: 0;
+            }
+
+            .terminal-output,
+            #terminal-input {
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 
@@ -1595,6 +1706,7 @@
             // prevent dragging when clicking on buttons or language switcher
             if (e.target.closest('.lang-switcher') || e.target.closest('.header-buttons')) return;
             if (e.button !== 0) return; // Only allow left-click to drag
+            if (window.innerWidth <= 480) return; // Don't drag on mobile
             isDragging = true;
             offset.x = e.clientX - container.offsetLeft;
             offset.y = e.clientY - container.offsetTop;

@@ -187,6 +187,100 @@
             color: #00FF00;
             font-size: 1.2rem;
         }
+
+        /* --- RESPONSIVE STYLES --- */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem 2rem;
+                margin: 0 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            li {
+                font-size: 1.3rem;
+            }
+
+            .footer-links {
+                padding: 8px 15px;
+            }
+
+            .footer-links a {
+                font-size: 1rem;
+                margin: 0 10px;
+            }
+
+            .footer-links .separator {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                height: auto;
+                min-height: 100vh;
+                overflow-y: auto;
+                overflow-x: hidden;
+                padding: 2rem 0;
+                display: block;
+            }
+
+            .container {
+                padding: 1.5rem;
+                width: 90%;
+                margin: 0 auto;
+                box-shadow: 0 0 15px #00FF00;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+                letter-spacing: 2px;
+                white-space: normal;
+                border-right: none;
+                animation: none !important;
+                min-height: 0;
+            }
+
+            h1.typing-done {
+                border-right: 3px solid #00FF00;
+                animation: blink-caret .75s step-end infinite;
+            }
+
+            li {
+                font-size: 1.2rem;
+                margin: 1rem 0;
+            }
+
+            a {
+                letter-spacing: 1px;
+            }
+
+            .footer-links {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                transform: none;
+                width: 90%;
+                margin: 2rem auto 0;
+                padding: 10px 0;
+                text-align: center;
+                border: 1px solid #00FF00;
+                background: rgba(0, 20, 0, 0.5);
+            }
+
+            .footer-links a {
+                font-size: 1rem;
+                margin: 0 10px;
+                display: inline-block;
+            }
+
+            .footer-links .separator {
+                font-size: 1rem;
+                display: inline;
+            }
+        }
     </style>
 </head>
 

@@ -662,6 +662,291 @@
                 width: 100%;
             }
         }
+
+        /* --- MOBİL & TABLET UYUMLULUĞU --- */
+        @media (max-width: 767px) {
+            .home-title {
+                font-size: 2.2rem !important;
+                /* Biraz daha küçük yapıldı sığması için */
+                line-height: 1.1;
+                margin-bottom: 1rem;
+                letter-spacing: 0.12em !important;
+                /* Letter spacing biraz azaltıldı */
+                word-break: keep-all;
+                /* Kelimeler bölünmesin */
+                hyphens: none;
+                /* Tire ile bölme yok */
+                white-space: nowrap;
+                /* Tek satırda kal, gerekirse taş */
+                overflow: visible;
+                /* Taşan kısım görünsün */
+            }
+
+            /* Ana sayfa başlığı için özel ayarlar */
+            .home-title .p5-reveal-text {
+                display: block;
+                /* Her satır ayrı blok */
+                word-break: keep-all;
+                /* Kelimeler bölünmesin */
+                white-space: nowrap;
+                /* Bölünme yok */
+            }
+
+            .section-title {
+                font-size: 2rem !important;
+                /* Bölüm başlıkları için daha küçük boyut */
+                margin-bottom: 1.5rem;
+                line-height: 1.1;
+                letter-spacing: 0.12em !important;
+                /* Bölüm başlıkları harf aralığı daha da arttırıldı */
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr !important;
+                /* Tek sütunlu layout */
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr 1fr !important;
+                /* İki sütunlu layout mobilde */
+                gap: 0.5rem;
+                max-width: 100%;
+            }
+
+            /* Cephanelik kategorileri mobilde daha küçük */
+            .inventory-category {
+                font-size: 0.9rem;
+                padding: 0.3rem 1rem;
+                margin: 0.75rem 0 0.5rem 0;
+                letter-spacing: 0.02em !important;
+                /* Harf aralığı azaltıldı */
+                width: fit-content;
+                max-width: 90%;
+            }
+
+            .inventory-category i {
+                font-size: 0.9rem;
+            }
+
+            /* Skill itemları mobilde daha kompakt */
+            .skill-item {
+                padding: 0.75rem 0.5rem;
+                min-height: auto;
+            }
+
+            .skill-item i {
+                font-size: 2rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .skill-item p {
+                font-size: 0.7rem;
+                line-height: 1.2;
+            }
+
+            #take-your-time {
+                font-size: 0.875rem;
+                /* 14px */
+                left: 1rem;
+                bottom: 1rem;
+            }
+
+            .content-section {
+                padding: 0;
+                /* Tüm padding'leri kaldır */
+                position: fixed;
+                /* Sabit pozisyon */
+                overflow-y: auto;
+                /* Kaydırma çubuğu */
+                -webkit-overflow-scrolling: touch;
+                /* iOS smooth scroll */
+            }
+
+            /* Ana sayfa özel padding */
+            #home {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem 0.5rem;
+                /* Yan padding azalt */
+            }
+
+            #home .content-wrapper {
+                width: 100%;
+                max-width: none;
+                /* Max genişlik sınırı kaldır */
+                padding: 0 0.5rem;
+                /* Minimal padding */
+            }
+
+            /* Skills bölümü tam mobil uyumlu */
+            #skills {
+                padding: 1rem;
+            }
+
+            #skills .content-wrapper {
+                padding: 0;
+                max-width: 100%;
+                height: auto;
+            }
+
+            /* Projeler bölümü */
+            #projects {
+                padding: 1rem;
+            }
+
+            #projects .content-wrapper {
+                padding: 0;
+                max-width: 100%;
+            }
+
+            /* İletişim bölümü */
+            #contact {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem 1rem;
+            }
+
+            /* Son skills grid'inin alt boşluğunu kaldır */
+            .skills-grid:last-of-type {
+                margin-bottom: 0.5rem !important;
+            }
+
+            /* Mobil navbar animasyonları */
+            #mobile-nav-menu {
+                backdrop-filter: blur(10px);
+            }
+
+            #mobile-nav-menu .nav-item {
+                font-size: 1.5rem;
+                width: 80vw;
+                padding: 0.75rem 2rem;
+                letter-spacing: 0.12em !important;
+                /* Navbar harf aralığı arttırıldı */
+                opacity: 0;
+                transform: translateX(-50px);
+                animation: slideInFromLeft 0.4s ease-out forwards;
+            }
+
+            #mobile-nav-menu .nav-item:nth-child(1) {
+                animation-delay: 0.1s;
+            }
+
+            #mobile-nav-menu .nav-item:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+
+            #mobile-nav-menu .nav-item:nth-child(3) {
+                animation-delay: 0.3s;
+            }
+
+            #mobile-nav-menu .nav-item:nth-child(4) {
+                animation-delay: 0.4s;
+            }
+
+            @keyframes slideInFromLeft {
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            /* Mobil navbar buton animasyonu */
+            #mobile-nav-toggle {
+                transition: all 0.3s ease;
+            }
+
+            #mobile-nav-toggle:hover {
+                transform: scale(1.1) rotate(-5deg);
+                background: #cc0000;
+            }
+
+            .project-card {
+                padding: 1rem;
+            }
+
+            .project-overlay-content {
+                padding: 1.5rem;
+                width: 95%;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            #project-detail-title {
+                font-size: 1.75rem;
+            }
+
+            #project-detail-description {
+                font-size: 1rem;
+            }
+
+            #home::before {
+                font-size: 15vw;
+                /* Arka plan metnini daha belirgin yap */
+            }
+
+            /* Mobilde özel geçiş efekti */
+            #transition-overlay {
+                display: none !important;
+            }
+
+            /* Mobil geçiş efekti için özel overlay */
+            #mobile-transition-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(45deg, var(--p5-red) 0%, var(--p5-red) 20%, #cc0000 50%, var(--p5-red) 80%, var(--p5-red) 100%);
+                z-index: 500;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: scale(0) rotate(45deg);
+            }
+
+            #mobile-transition-overlay.active {
+                opacity: 1;
+                visibility: visible;
+                transform: scale(1.5) rotate(0deg);
+            }
+
+            /* Mobilde sayfa geçişleri için gelişmiş efekt */
+            .content-section {
+                transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out, transform 0.25s ease-in-out;
+            }
+
+            .content-section.transitioning-out {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            .content-section.transitioning-in {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            /* Mobil menü z-index'ini artır */
+            #mobile-nav-menu {
+                z-index: 300;
+            }
+
+            #mobile-nav-toggle {
+                z-index: 301;
+            }
+
+            /* Subtitle box mobilde daha küçük */
+            .subtitle-box {
+                margin-top: 1rem;
+                padding: 0.4rem 1.5rem;
+            }
+
+            .subtitle-box p {
+                font-size: 1rem !important;
+            }
+        }
     </style>
 </head>
 
@@ -683,6 +968,9 @@
         <div class="transition-shape"></div>
         <div class="transition-shape"></div>
     </div>
+
+    <!-- MOBİL GEÇİŞ EFEKTİ -->
+    <div id="mobile-transition-overlay"></div>
 
 
     <button id="mobile-nav-toggle" class="hidden">MENÜ</button>
@@ -709,8 +997,8 @@
             <div class="content-wrapper text-center px-4 flex flex-col items-center justify-center">
                 <div class="home-title text-6xl sm:text-7xl md:text-8xl font-bold uppercase p5-title-effect"
                     style="transform: rotate(-3deg); line-height: 0.8;">
-                    <div class="p5-reveal-text" style="letter-spacing: -3px;">Ercüment</div>
-                    <div class="p5-reveal-text" style="letter-spacing: -3px;">Berke Arastaman</div>
+                    <div class="p5-reveal-text">Ercüment</div>
+                    <div class="p5-reveal-text">Berke Arastaman</div>
                 </div>
                 <div class="subtitle-box">
                     <p class="text-xl sm:text-2xl md:text-3xl uppercase p5-reveal-text" style="letter-spacing: 0.2em;">
@@ -857,6 +1145,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const navContainers = [document.getElementById('main-nav'), document.getElementById('mobile-nav-menu')];
             const transitionOverlay = document.getElementById('transition-overlay');
+            const mobileTransitionOverlay = document.getElementById('mobile-transition-overlay');
             const mobileNavToggle = document.getElementById('mobile-nav-toggle');
             const mobileNavMenu = document.getElementById('mobile-nav-menu');
             let isTransitioning = false;
@@ -913,29 +1202,64 @@
                 if (!nextActiveSection || currentActiveSection.id === targetId) return;
 
                 isTransitioning = true;
-                animateContentOut(currentActiveSection);
-                transitionOverlay.classList.add('wipe');
 
-                setTimeout(() => {
-                    currentActiveSection.classList.remove('active');
-                    nextActiveSection.classList.add('active');
-                    animateContentIn(nextActiveSection);
+                // Mobil cihazlarda özel geçiş efekti
+                if (window.innerWidth <= 767) {
+                    // Çıkış animasyonu
+                    currentActiveSection.classList.add('transitioning-out');
+                    mobileTransitionOverlay.classList.add('active');
 
-                    navContainers.forEach(container => {
-                        container.querySelector('.nav-item.active')?.classList.remove('active');
-                        container.querySelector(`.nav-item[data-target="${targetId}"]`)?.classList.add('active');
-                    });
+                    setTimeout(() => {
+                        currentActiveSection.classList.remove('active', 'transitioning-out');
+                        nextActiveSection.classList.add('active', 'transitioning-in');
 
-                    if (mobileNavMenu.classList.contains('open')) {
-                        mobileNavMenu.classList.remove('open');
-                    }
-                }, 400); // Geçiş animasyonunun ortasında içerik değiştir
+                        // Kısa bir süre sonra giriş animasyonunu başlat
+                        setTimeout(() => {
+                            nextActiveSection.classList.remove('transitioning-in');
+                            animateContentIn(nextActiveSection);
+                        }, 50);
 
-                const firstShape = transitionOverlay.querySelector('.transition-shape');
-                firstShape.addEventListener('animationend', () => {
-                    transitionOverlay.classList.remove('wipe');
-                    isTransitioning = false;
-                }, { once: true });
+                        navContainers.forEach(container => {
+                            container.querySelector('.nav-item.active')?.classList.remove('active');
+                            container.querySelector(`.nav-item[data-target="${targetId}"]`)?.classList.add('active');
+                        });
+
+                        if (mobileNavMenu.classList.contains('open')) {
+                            mobileNavMenu.classList.remove('open');
+                        }
+                    }, 150);
+
+                    // Overlay'i kaldır
+                    setTimeout(() => {
+                        mobileTransitionOverlay.classList.remove('active');
+                        isTransitioning = false;
+                    }, 400);
+                } else {
+                    // Masaüstünde normal geçiş efekti
+                    animateContentOut(currentActiveSection);
+                    transitionOverlay.classList.add('wipe');
+
+                    setTimeout(() => {
+                        currentActiveSection.classList.remove('active');
+                        nextActiveSection.classList.add('active');
+                        animateContentIn(nextActiveSection);
+
+                        navContainers.forEach(container => {
+                            container.querySelector('.nav-item.active')?.classList.remove('active');
+                            container.querySelector(`.nav-item[data-target="${targetId}"]`)?.classList.add('active');
+                        });
+
+                        if (mobileNavMenu.classList.contains('open')) {
+                            mobileNavMenu.classList.remove('open');
+                        }
+                    }, 400);
+
+                    const firstShape = transitionOverlay.querySelector('.transition-shape');
+                    firstShape.addEventListener('animationend', () => {
+                        transitionOverlay.classList.remove('wipe');
+                        isTransitioning = false;
+                    }, { once: true });
+                }
             }
 
             // İlk yüklemede ana sayfa animasyonunu tetikle
@@ -952,6 +1276,17 @@
 
             mobileNavToggle.addEventListener('click', () => {
                 mobileNavMenu.classList.toggle('open');
+
+                // Navbar açıldığında animasyonları yeniden tetikle
+                if (mobileNavMenu.classList.contains('open')) {
+                    const navItems = mobileNavMenu.querySelectorAll('.nav-item');
+                    navItems.forEach((item, index) => {
+                        item.style.animation = 'none';
+                        item.offsetHeight; // Reflow
+                        item.style.animation = `slideInFromLeft 0.4s ease-out forwards`;
+                        item.style.animationDelay = `${(index + 1) * 0.1}s`;
+                    });
+                }
             });
 
             // --- Proje Overlay Logic ---

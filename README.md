@@ -37,6 +37,8 @@ Bu portfolyo, "Borkew FUTURISTIC OS v2.1" adında, kendine ait bir açılış ek
     -   İşletim sistemi ses efektleri.
     -   Başlat menüsü ve masaüstü ikonları.
     -   Dinamik saat ve "kapatma" (shutdown) simülasasyonu.
+    -   Notepad, Çizim ve Flappy Bird uygulamalrı bulunuyor.
+    -   Hatalar ve Tema uyumsuzlukları bulunabilir. ( Tekrardan tasarlamaya çalıştığım için :( )
 
 ### 3. `index3.html` - Kozmik Korku ve Terminal Portfolyosu
 
